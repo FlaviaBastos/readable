@@ -1,43 +1,43 @@
 const API_ID = process.env.REACT_APP_API_ID
-const url = ''
+const url = 'http://localhost:3001'
 
 const headers = {
   'Accept': 'application/json',
   'Authorization': API_ID
 }
 
-// export function fetchRecipes (food = '') {
-//   food = food.trim()
-//
-//   return fetch(`https://api.edamam.com/search?q=${food}&app_id=${API_ID}&app_key=${APP_KEY}`)
-//     .then((res) => res.json())
-//     .then(({ hits }) => hits.map(({ recipe }) => recipe))
-// }
+export const getAll = () =>
+  fetch(`${url}/posts`, { headers })
+    .then(res => res.json())
+    .then(data => data)
 
-// export const get = (bookId) =>
-//   fetch(`${api}/books/${bookId}`, { headers })
-//     .then(res => res.json())
-//     .then(data => data.book)
-//
-// export const getAll = () =>
-//   fetch(`${api}/books`, { headers })
-//     .then(res => res.json())
-//     .then(data => data.books
+export const getForCat = (category) =>
+  fetch(`${url}/${category}/posts`, { headers })
+    .then(res => res.json())
+    .then(data => data)
 
-export function fetchContent (data = '') {
-  fetch(
-      url,
-    {
-      headers: { 'Authorization': API_ID }
-    }
-  )
-    .then()
-    .then()
-}
+export const getPost = (postId) =>
+  fetch(`${url}/posts/${postId}`, { headers })
+    .then(res => res.json())
+    .then(data => data)
 
-// fetch(
-//     url,
-//     {
-//         headers: { 'Authorization': API_ID }
-//     }
-// )
+export const getComments = (postId) =>
+  fetch(`${url}/posts/${postId}/comments`, { headers })
+    .then(res => res.json())
+    .then(data => data)
+
+export const getSingleComment = (commentId) =>
+  fetch(`${url}/comments/${commentId}`, { headers })
+    .then(res => res.json())
+    .then(data => data)
+
+export const addPost = (params) =>
+fetch(`${url}/posts`, {
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.strigify({ params })
+}).then(res => res.json())
+  .then(data => data)
