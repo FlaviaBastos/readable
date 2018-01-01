@@ -12,6 +12,15 @@ li {
   list-style-type: none;
 }
 
+.cat ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cat li {
+  display: inline;
+}
 .container {
   margin: 0 auto;
   max-width: 1070px;

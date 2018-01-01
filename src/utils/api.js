@@ -11,6 +11,11 @@ export const getAll = () =>
     .then(res => res.json())
     .then(data => data)
 
+export const getCats = () =>
+  fetch(`${url}/categories`, { headers })
+    .then(res => res.json())
+    .then(data => data)
+
 export const getForCat = (category) =>
   fetch(`${url}/${category}/posts`, { headers })
     .then(res => res.json())

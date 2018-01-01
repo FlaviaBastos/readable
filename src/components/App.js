@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import * as API from '../utils/api'
+import CategoryHeader from './CategoryHeader'
+import SortBar from './SortBar'
+import ItemsList from './ItemsList'
+import ItemDetail from './ItemDetail'
 import { connect } from 'react-redux'
 import { addContent } from '../actions'
 
@@ -8,11 +12,12 @@ class App extends Component {
     this.props.dispatch(addContent({}))
   }
 
-  componentDidMount() {
-    API.getAll().then((data) => {
-      console.log('DATA IS: ', data)
-    })
-  }
+  // componentDidMount() {
+  //   API.getAll().then((data) => {
+  //     console.log('DATA IS: ', data)
+  //     const DATA = data
+  //   })
+  // }
 
   loadCategory(category) {
     API.getForCat(category).then((data) => {
@@ -41,13 +46,21 @@ class App extends Component {
 
   render() {
     console.log('Props ', this.props)
+
     return (
       <div>
         ta-daaaaaa {`🎆`}
-        <button onClick={() => this.loadCategory('react')}>Show one category</button>
-        <button onClick={() => this.showPost('8xf0y6ziyjabvozdd253nd')}>Show one post</button>
-        <button onClick={() => this.showComments('8xf0y6ziyjabvozdd253nd')}>Show all comments for post</button>
-        <button onClick={() => this.showSingleComment('8tu4bsun805n8un48ve89')}>Show one comment</button>
+        <div>
+          <p>API testing: </p>
+          <button onClick={() => this.loadCategory('react')}>Show one category</button>
+          <button onClick={() => this.showPost('8xf0y6ziyjabvozdd253nd')}>Show one post</button>
+          <button onClick={() => this.showComments('8xf0y6ziyjabvozdd253nd')}>Show all comments for post</button>
+          <button onClick={() => this.showSingleComment('8tu4bsun805n8un48ve89')}>Show one comment</button>
+        </div>
+        <CategoryHeader />
+        <SortBar />
+        <ItemsList />
+        <ItemDetail />
       </div>
     )
   }
