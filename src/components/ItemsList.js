@@ -1,19 +1,25 @@
 import React from 'react'
 import * as API from '../utils/api'
+import PropTypes from 'prop-types'
 import ItemSummary from './ItemSummary'
+import ManageVotes from './ManageVotes'
 
 class ItemsList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: []
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     posts: []
+  //   }
+  // }
 
-  componentDidMount() {
-    API.getAll().then((posts) => {
-      this.setState({ posts })
-    })
+  // componentDidMount() {
+  //   API.getAll().then((posts) => {
+  //     this.setState({ posts })
+  //   })
+  // }
+
+  static propTypes = {
+    posts: PropTypes.array.isRequired
   }
 
   render() {
@@ -21,10 +27,10 @@ class ItemsList extends React.Component {
       <div>
         Boom!
         <ItemSummary
-          posts={this.state.posts}
+          posts={this.props.posts}
         />
         {/* {comment.count} */}
-        {/* <ManageVotes /> */}
+        <ManageVotes />
         {/* <DeleteItem /> */}
         {/* <EditItem /> */}
       </div>

@@ -8,16 +8,25 @@ import { connect } from 'react-redux'
 import { addContent } from '../actions'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      comments: []
+    }
+  }
+
   doThing = () => {
     this.props.dispatch(addContent({}))
   }
 
-  // componentDidMount() {
-  //   API.getAll().then((data) => {
-  //     console.log('DATA IS: ', data)
-  //     const DATA = data
-  //   })
-  // }
+  componentDidMount() {
+    API.getAll().then((data) => {
+      console.log('DATA IS: ', data)
+      this.setState({ posts: data })
+      const DATA = data
+    })
+  }
 
   loadCategory(category) {
     API.getForCat(category).then((data) => {
@@ -59,7 +68,9 @@ class App extends Component {
         </div>
         <CategoryHeader />
         <SortBar />
-        <ItemsList />
+        <ItemsList
+          posts={this.state.posts}
+        />
         <ItemDetail />
       </div>
     )
