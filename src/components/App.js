@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import * as API from '../utils/api'
+import { Route } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import CategoryHeader from './CategoryHeader'
 import SortBar from './SortBar'
 import ItemsList from './ItemsList'
@@ -68,10 +70,15 @@ class App extends Component {
         </div>
         <CategoryHeader />
         <SortBar />
-        <ItemsList
-          posts={this.state.posts}
-        />
-        <ItemDetail />
+        <Route exact path='/' render={() => (
+          <ItemsList
+            data={this.state.posts}
+            type='posts'
+          />
+        )}/>
+        <Route path='/posts/([^\/]+?)' render={() => (
+          <ItemDetail />
+        )}/>
       </div>
     )
   }
@@ -83,4 +90,4 @@ function mapStateToProps (content) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default withRouter(connect(mapStateToProps)(App));

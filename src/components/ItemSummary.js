@@ -1,25 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class ItemSummary extends React.Component {
   static propTypes = {
-    posts: PropTypes.array.isRequired
+    summary: PropTypes.array.isRequired,
+    type: PropTypes.string.isRequired
   }
 
   render() {
-    const posts = this.props.posts
+    const { summary, type } = this.props
 
     return (
       <ul>
-        {posts.map(post => (
-          <li key={post.id}>
-            <div className="post-title">
-              <a href={post.id}>
-                {post.title}
-              </a>
+        {summary.map(data => (
+          <li key={data.id}>
+            <div className="summary-title">
+              {type === 'posts' &&
+                <Link to={{
+                  pathname: '/posts/'.concat(data.id)
+                }}
+                  className="summary-link"
+                  >{data.title}
+                </Link>
+              }
             </div>
-            <div className="post-details">
-              by {post.author}, with {post.commentCount} comments and score {post.voteScore}
+            <div className="summary-details">
+              by {data.author}, with {data.commentCount} comments and score {data.voteScore}
             </div>
           </li>
         ))}

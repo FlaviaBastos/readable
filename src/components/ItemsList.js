@@ -19,7 +19,8 @@ class ItemsList extends React.Component {
   // }
 
   static propTypes = {
-    posts: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    type: PropTypes.string.isRequired
   }
 
   render() {
@@ -27,7 +28,8 @@ class ItemsList extends React.Component {
       <div>
         Boom!
         <ItemSummary
-          posts={this.props.posts}
+          summary={this.props.data}
+          type={this.props.type}
         />
         {/* {comment.count} */}
         <ManageVotes />
