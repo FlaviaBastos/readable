@@ -14,6 +14,7 @@ class App extends Component {
     super(props);
     this.state = {
       posts: [],
+      category: [],
       comments: []
     }
   }
@@ -33,6 +34,7 @@ class App extends Component {
   loadCategory(category) {
     API.getForCat(category).then((data) => {
       console.log('Posts for cat', category, data)
+      this.setState({ category: data })
     })
   }
 
@@ -68,11 +70,20 @@ class App extends Component {
           <button onClick={() => this.showComments('8xf0y6ziyjabvozdd253nd')}>Show all comments for post</button>
           <button onClick={() => this.showSingleComment('8tu4bsun805n8un48ve89')}>Show one comment</button>
         </div>
-        <CategoryHeader />
+        <CategoryHeader
+          onChangeCategory={(category) =>
+          this.loadCategory(category)
+        }/>
         <SortBar />
         <Route exact path='/' render={() => (
           <ItemsList
             data={this.state.posts}
+            type='posts'
+          />
+        )}/>
+        <Route path='/([^\/]+?)' render={() => (
+          <ItemsList
+            data={this.state.category}
             type='posts'
           />
         )}/>
