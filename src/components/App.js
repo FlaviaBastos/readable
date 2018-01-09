@@ -56,6 +56,33 @@ class App extends Component {
     })
   }
 
+  changeFilter(filterName) {
+    console.log('Apply filter: ', filterName)
+    switch (filterName) {
+      case 'recent':
+        const newest = this.state.posts.sort((a, b) =>
+          a.timestamp > b.timestamp ? -1 : 1);
+        this.setState({ posts: newest })
+        console.table(newest)
+        break;
+      case 'comments':
+        const mostCommented = this.state.posts.sort((a, b) =>
+          a.commentCount > b.commentCount ? -1 : 1);
+        console.table(mostCommented)
+        this.setState({ posts: mostCommented })
+        break;
+      case 'popular':
+        const mostVoted = this.state.posts.sort((a, b) =>
+          a.voteScore > b.voteScore ? -1 : 1);
+          this.setState({ posts: mostVoted })
+        console.table(mostVoted)
+        break;
+      default:
+        { this.state.posts }
+    }
+
+  }
+
 
   render() {
     console.log('Props ', this.props)
@@ -74,7 +101,10 @@ class App extends Component {
           onChangeCategory={(category) =>
           this.loadCategory(category)
         }/>
-        <SortBar />
+        <SortBar
+          onChangeView={(byFilter) =>
+          this.changeFilter(byFilter)
+        }/>
         <Route exact path='/' render={() => (
           <ItemsList
             data={this.state.posts}
