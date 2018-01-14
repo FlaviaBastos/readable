@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 class CategoryHeader extends React.Component {
   static propTypes = {
-    onChangeCategory: PropTypes.func.isRequired
+    onChangeCategory: PropTypes.func.isRequired,
   }
 
   constructor(props) {

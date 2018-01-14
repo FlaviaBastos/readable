@@ -5,22 +5,30 @@ import { Link } from 'react-router-dom'
 class ItemSummary extends React.Component {
   static propTypes = {
     summary: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    onPostClicked: PropTypes.func.isRequired
+  }
+
+  sendPostID = (id) => {
+    this.props.onPostClicked(id)
   }
 
   render() {
     const { summary, type } = this.props
+    let url
 
     return (
       <ul>
         {summary.map(data => (
+          url = data.category + '/',
           <li key={data.id}>
             <div className="summary-title">
               {type === 'posts' &&
                 <Link to={{
-                  pathname: '/posts/'.concat(data.id)
-                }}
+                  pathname: url.concat(data.id)
+                  }}
                   className="summary-link"
+                  onClick={() => this.sendPostID(data.id)}
                   >{data.title}
                 </Link>
               }

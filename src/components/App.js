@@ -15,7 +15,8 @@ class App extends Component {
     this.state = {
       posts: [],
       category: [],
-      comments: []
+      comments: [],
+      single: []
     }
   }
 
@@ -39,8 +40,9 @@ class App extends Component {
   }
 
   showPost(postId) {
-    API.getPost(postId).then((data) => {
-      console.log('One post', data)
+    API.getPost(postId).then((single) => {
+      this.setState({ single })
+      console.log('SINGLE: ', single)
     })
   }
 
@@ -83,7 +85,6 @@ class App extends Component {
 
   }
 
-
   render() {
     console.log('Props ', this.props)
 
@@ -109,16 +110,22 @@ class App extends Component {
           <ItemsList
             data={this.state.posts}
             type='posts'
-          />
+            onItemClicked={(id) =>
+              this.showPost(id)
+          }/>
         )}/>
         <Route path='/([^\/]+?)' render={() => (
           <ItemsList
             data={this.state.category}
             type='posts'
-          />
+            onItemClicked={(id) =>
+              this.showPost(id)
+          }/>
         )}/>
-        <Route path='/posts/([^\/]+?)' render={() => (
-          <ItemDetail />
+        <Route path='/([^\/]+?)/([^\/]+?)' render={() => (
+          <ItemDetail
+            item={this.state.single}
+          />
         )}/>
       </div>
     )

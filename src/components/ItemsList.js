@@ -5,22 +5,14 @@ import ItemSummary from './ItemSummary'
 import ManageVotes from './ManageVotes'
 
 class ItemsList extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     posts: []
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   API.getAll().then((posts) => {
-  //     this.setState({ posts })
-  //   })
-  // }
-
   static propTypes = {
     data: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    onItemClicked: PropTypes.func.isRequired
+  }
+
+  postClicked(id) {
+    this.props.onItemClicked(id)
   }
 
   render() {
@@ -30,6 +22,9 @@ class ItemsList extends React.Component {
         <ItemSummary
           summary={this.props.data}
           type={this.props.type}
+          onPostClicked={(postId) =>
+            this.postClicked(postId)
+          }
         />
         {/* {comment.count} */}
         <ManageVotes />
