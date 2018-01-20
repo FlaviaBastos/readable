@@ -3,6 +3,9 @@ import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+// Here I use local state to load the existing categories names
+// Once a category is selected, Redux handles updating store state with content
+
 class CategoryHeader extends React.Component {
   static propTypes = {
     onChangeCategory: PropTypes.func.isRequired,
@@ -33,7 +36,7 @@ class CategoryHeader extends React.Component {
         <ul>
           <li key="all">
             <Link to='/' value='/' onClick={(e) => this.changeCategory(e)}>
-              All
+              all
             </Link>
           </li>
           {categories.map(data => (

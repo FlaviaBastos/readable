@@ -1,11 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+//  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
+function mapStateToProps(state) {
+  const { selectedCategory, contentByCategory } = state
+  const {
+    isFetching,
+    items: posts
+  } = contentByCategory[selectedCategory] || {
+    isFetching: true,
+    items: []
+  }
+  return {
+    selectedCategory,
+    posts,
+    isFetching
+  }
+}
 
 class ItemDetail extends React.Component {
-  static propTypes = {
-    item: PropTypes.object.isRequired
-  }
-
   findDate(timestamp) {
     console.log('HEERE', timestamp)
     let date = new Date(timestamp)
@@ -14,20 +28,21 @@ class ItemDetail extends React.Component {
   }
 
   render() {
-    const item = this.props
-    // let date = findDate(item.item.timestamp);
-    // console.log('Date got: ', date)
+    const item = this.props.posts
 
-    return(
+    return (
       <div>
-        <p>Stuff</p>
-        <h2>{item.item.title}</h2>
-        <small>In {item.item.category}, by {item.item.author}, on {item.item.timestamp} </small>
-        <p>{item.item.body}</p>
-        <p>Other stuff</p>
+        { item.map(data => (
+          <div key={data.id}>
+            <h2>{data.title}</h2>
+            <small>In {data.category}, by {data.author}, on {data.timestamp} </small>
+            <p>{data.body}</p>
+            <p>Other stuff</p>
+          </div>
+        ))}
       </div>
     )
   }
 }
 
-export default ItemDetail
+export default connect(mapStateToProps)(ItemDetail)

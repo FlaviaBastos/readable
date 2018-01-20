@@ -22,6 +22,7 @@ export function requestContent(category) {
 }
 
 export function receiveContent(category, data) {
+  console.log('RECEIVE: ', category, data)
   return {
     type: RECEIVE_CONTENT,
     category,
@@ -32,9 +33,7 @@ export function receiveContent(category, data) {
 export function fetchContent(category) {
   return function (dispatch) {
     dispatch(requestContent(category))
-    console.log('GOT HERE')
     API.getAll().then((data) => {
-      console.log('DATA IS: ', data)
       dispatch(receiveContent(category, data))
     })
   }

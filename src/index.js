@@ -18,10 +18,9 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 )
 
-store.dispatch(selectCategory('redux'))
+store.dispatch(selectCategory('all'))
 store
-  .dispatch(fetchContent())
-  .then(() => console.log(store.getState))
+  .dispatch(fetchContent('all'))
 
 ReactDOM.render(
   <Provider store={store}>

@@ -2,7 +2,6 @@ import React from 'react'
 import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import ItemSummary from './ItemSummary'
-import ManageVotes from './ManageVotes'
 
 class ItemsList extends React.Component {
   static propTypes = {
@@ -25,7 +24,6 @@ class ItemsList extends React.Component {
             this.postClicked(postId)
           }
         />
-        <ManageVotes />
         {/* <DeleteItem /> */}
         {/* <EditItem /> */}
       </div>
