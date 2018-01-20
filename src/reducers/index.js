@@ -3,6 +3,8 @@ import {
   SELECT_CATEGORY,
   REQUEST_CONTENT,
   RECEIVE_CONTENT,
+  ADD_VOTE,
+  REMOVE_VOTE,
   ADD_CONTENT,
   DELETE_CONTENT,
   EDIT_CONTENT,
@@ -51,9 +53,21 @@ function contentByCategory(state = {}, action) {
   }
 }
 
+function manageVotes (state = {}, action) {
+  switch (action.type) {
+    case ADD_VOTE:
+      return state
+    case REMOVE_VOTE:
+      return
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   contentByCategory,
-  selectedCategory
+  selectedCategory,
+  manageVotes
 })
 
 export default rootReducer

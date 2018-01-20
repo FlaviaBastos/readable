@@ -1,14 +1,36 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+function mapStateToProps(state) {
+  const { selectedCategory, contentByCategory, manageVotes } = state
+  const {
+    isFetching,
+    items: posts
+  } = contentByCategory[selectedCategory] || {
+    isFetching: true,
+    items: []
+  }
+  return {
+    selectedCategory,
+    posts,
+    isFetching
+  }
+}
 
 class ManageVotes extends React.Component {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+  }
+
   addVote = () => {
-    console.log('vote added!');
+    console.log('vote added for post id: ', this.props.id)
   }
 
   removeVote = () => {
-    console.log('vote removed!')
+    console.log('vote removed for post id: ', this.props.id)
   }
-  
+
   render() {
     return(
       <div>
@@ -19,4 +41,4 @@ class ManageVotes extends React.Component {
   }
 }
 
-export default ManageVotes
+export default connect(mapStateToProps)(ManageVotes)
