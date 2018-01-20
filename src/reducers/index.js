@@ -1,46 +1,59 @@
+import { combineReducers } from 'redux'
 import {
+  SELECT_CATEGORY,
+  REQUEST_CONTENT,
+  RECEIVE_CONTENT,
   ADD_CONTENT,
   DELETE_CONTENT,
   EDIT_CONTENT,
 } from '../actions'
 
-const uid = Date.now().toString();
-
-const initialContentState = {
-  [uid]: {
-    id: uid,
-    timestamp: Date.now(),
-    title: '',
-    body: null,
-    author: null,
-    category: null,
-    voteScore: 1,
-    deleted: false,
-    commentCount: 0
-  }
-}
-
-function manageContent (state = initialContentState, action) {
-  const { uid, id, title, body } = action
-
+function selectedCategory(state = 'redux', action) {
   switch (action.type) {
-    case ADD_CONTENT:
-      return {
-        ...state,
-        [uid]: {
-          ...state[uid],
-          id: id,
-          title: title,
-          body: body
-        }
-      }
-    case DELETE_CONTENT:
-      return {}
-    case EDIT_CONTENT:
-      return {}
+    case SELECT_CATEGORY:
+      return action.category
     default:
       return state
   }
 }
 
-export default manageContent
+function posts(
+  state = {
+    isFetching: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case REQUEST_CONTENT:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case RECEIVE_CONTENT:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.posts
+      })
+    default:
+      return state
+  }
+}
+
+function contentByCategory(state = {}, action) {
+  switch (action.type) {
+    case RECEIVE_CONTENT:
+    case REQUEST_CONTENT:
+      return Object.assign({}, state, {
+        [action.category]: posts(state[action.category], action)
+      })
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({
+  contentByCategory,
+  selectedCategory
+})
+
+export default rootReducer

@@ -18,7 +18,6 @@ class ItemsList extends React.Component {
   render() {
     return (
       <div>
-        Boom!
         <ItemSummary
           summary={this.props.data}
           type={this.props.type}
@@ -26,7 +25,6 @@ class ItemsList extends React.Component {
             this.postClicked(postId)
           }
         />
-        {/* {comment.count} */}
         <ManageVotes />
         {/* <DeleteItem /> */}
         {/* <EditItem /> */}
