@@ -7,6 +7,7 @@ import CategoryHeader from './CategoryHeader'
 import SortBar from './SortBar'
 import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
+import AddContent from './AddContent'
 import { connect } from 'react-redux'
 import { addContent, receiveContent, selectCategory, selectedCategory, goFetchContent } from '../actions'
 
@@ -113,6 +114,9 @@ class App extends Component {
                 } />
               </div>
             )} />
+            <Route exact path='/add/' render={() => (
+              <AddContent />
+            )} />
             <Route path='/([^\/]+?)' render={() => (
               // display posts for one category
               <div>
@@ -146,4 +150,4 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps)(App)
+export default withRouter(connect(mapStateToProps)(App))

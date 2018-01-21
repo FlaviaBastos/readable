@@ -19,9 +19,9 @@ function mapStateToProps(state) {
 }
 
 class ManageVotes extends React.Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-  }
+  // static propTypes = {
+  //   id: PropTypes.string.isRequired,
+  // }
 
   addVote = () => {
     console.log('vote added for post id: ', this.props.id)

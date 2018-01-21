@@ -43,6 +43,6 @@ fetch(`${url}/posts`, {
     ...headers,
     'Content-Type': 'application/json'
   },
-  body: JSON.strigify({ params })
+  body: JSON.stringify(params)
 }).then(res => res.json())
   .then(data => data)

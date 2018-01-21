@@ -2,6 +2,7 @@ import React from 'react'
 import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import ItemSummary from './ItemSummary'
+import { Link } from 'react-router-dom'
 
 class ItemsList extends React.Component {
   static propTypes = {
@@ -24,6 +25,11 @@ class ItemsList extends React.Component {
             this.postClicked(postId)
           }
         />
+        <div className="add-link">
+          <Link
+            to='/add/'
+            >++ Write a post ++</Link>
+        </div>
         {/* <DeleteItem /> */}
         {/* <EditItem /> */}
       </div>

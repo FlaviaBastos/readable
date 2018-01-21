@@ -53,6 +53,19 @@ function contentByCategory(state = {}, action) {
   }
 }
 
+// function manageContent(state = {}, action) {
+//   switch (action.type) {
+//     case ADD_CONTENT:
+//       return Object.assign({}, state, {
+//         [action.category]: posts(state[action.category], action)
+//       })
+//     case DELETE_CONTENT:
+//       return
+//     default:
+//       return state
+//   }
+// }
+
 function manageVotes (state = {}, action) {
   switch (action.type) {
     case ADD_VOTE:
@@ -67,6 +80,7 @@ function manageVotes (state = {}, action) {
 const rootReducer = combineReducers({
   contentByCategory,
   selectedCategory,
+  // manageContent,
   manageVotes
 })
 

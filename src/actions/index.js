@@ -61,3 +61,18 @@ export function downvote(id) {
     id
   }
 }
+
+export function addContent() {
+  return {
+    type: ADD_CONTENT
+  }
+}
+
+export function writePost(content) {
+  return function (dispatch) {
+    API.addPost(content).then((data) => {
+      console.log('DATA FROM API: ', data)
+      dispatch(receiveContent(data.category, data))
+    })
+  }
+}
