@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 //  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
 function mapStateToProps(state) {
@@ -21,10 +22,16 @@ function mapStateToProps(state) {
 
 class ItemDetail extends React.Component {
   findDate(timestamp) {
-    console.log('HEERE', timestamp)
     let date = new Date(timestamp)
-    console.log('Date got: ', date)
-    return date
+    let dateY = date.getFullYear()
+    let dateM = date.getMonth()
+    let dateD = date.getDate()
+    let dateH = date.getHours()
+    let dateMn = date.getMinutes()
+    //console.log('Date got: ', date, dateY, dateM, dateD, dateH, dateMn)
+    let timeAgo = moment([dateY, dateM, dateD, dateH, dateMn]).fromNow()
+    //console.log('TIME AGO: ', timeAgo)
+    return timeAgo
   }
 
   render() {
@@ -35,7 +42,7 @@ class ItemDetail extends React.Component {
         { item.map(data => (
           <div key={data.id}>
             <h2>{data.title}</h2>
-            <small>In {data.category}, by {data.author}, on {data.timestamp} </small>
+            <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}</small>
             <p>{data.body}</p>
             <p>Other stuff</p>
           </div>
