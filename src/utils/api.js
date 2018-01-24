@@ -46,3 +46,14 @@ fetch(`${url}/posts`, {
   body: JSON.stringify(params)
 }).then(res => res.json())
   .then(data => data)
+
+export const deletePost = (postId) =>
+  fetch(`${url}/posts/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: postId
+  }).then(res => res.json())
+    .then(data => data)

@@ -71,8 +71,17 @@ export function addContent() {
 export function writePost(content) {
   return function (dispatch) {
     API.addPost(content).then((data) => {
-      console.log('DATA FROM API: ', data)
       dispatch(receiveContent(data.category, data))
+    })
+  }
+}
+
+export function removePost(id) {
+  return function (dispatch) {
+    API.deletePost(id).then((data) => {
+      console.log('API DELETE: ', data)
+      // need to reload page here
+      // it seems that no dispatch required (?!?!) but why?
     })
   }
 }
