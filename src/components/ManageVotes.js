@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { changeVote } from '../actions'
 
 function mapStateToProps(state) {
-  const { selectedCategory, contentByCategory, manageVotes } = state
+  const { selectedCategory, contentByCategory } = state
   const {
     isFetching,
     items: posts
@@ -19,23 +20,25 @@ function mapStateToProps(state) {
 }
 
 class ManageVotes extends React.Component {
-  // static propTypes = {
-  //   id: PropTypes.string.isRequired,
-  // }
-
-  addVote = () => {
-    console.log('vote added for post id: ', this.props.id)
+  constructor(props) {
+    super(props)
+    this.handleVotes = this.handleVotes.bind(this)
   }
 
-  removeVote = () => {
-    console.log('vote removed for post id: ', this.props.id)
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+  }
+
+  handleVotes = (id, voteOption) => {
+    const values = {id: id, option: voteOption}
+    this.props.dispatch(changeVote(values))
   }
 
   render() {
     return(
       <div>
-        <button onClick={() => this.addVote()}>Upvote</button>
-        <button onClick={() => this.removeVote()}>Downvote</button>
+        <button onClick={() => this.handleVotes(this.props.id, 'upVote')}>Upvote</button>
+        <button onClick={() => this.handleVotes(this.props.id, 'downVote')}>Downvote</button>
       </div>
     )
   }

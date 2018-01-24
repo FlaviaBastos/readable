@@ -1,9 +1,6 @@
 import React from 'react'
-import * as API from '../utils/api'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { addContent, receiveContent, selectCategory, selectedCategory, goFetchContent, writePost } from '../actions'
+import { writePost } from '../actions'
 import serializeForm from 'form-serialize'
 import cuid from 'cuid'
 

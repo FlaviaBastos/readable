@@ -1,5 +1,4 @@
 import React from 'react'
-import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import ItemSummary from './ItemSummary'
 import { Link } from 'react-router-dom'

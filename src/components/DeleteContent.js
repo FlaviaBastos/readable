@@ -1,9 +1,7 @@
 import React from 'react'
-import * as API from '../utils/api'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { addContent, receiveContent, selectCategory, selectedCategory, goFetchContent, writePost, removePost } from '../actions'
+import { removePost } from '../actions'
 
 function mapStateToProps(state) {
   const { selectedCategory, contentByCategory } = state

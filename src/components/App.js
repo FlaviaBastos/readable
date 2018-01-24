@@ -9,7 +9,7 @@ import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
 import AddContent from './AddContent'
 import { connect } from 'react-redux'
-import { addContent, receiveContent, selectCategory, selectedCategory, goFetchContent } from '../actions'
+import { receiveContent, selectCategory, goFetchContent } from '../actions'
 
 function mapStateToProps(state) {
   const { selectedCategory, contentByCategory } = state
@@ -87,7 +87,7 @@ class App extends Component {
 
   render() {
     console.log('Props ', this.props)
-    const { selectedCategory, posts, isFetching } = this.props
+    const { posts, isFetching } = this.props
 
     return (
       <div>

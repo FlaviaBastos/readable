@@ -1,13 +1,8 @@
 import * as API from '../utils/api'
 
+export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const REQUEST_CONTENT = ' REQUEST_CONTENT'
 export const RECEIVE_CONTENT = 'RECEIVE_CONTENT'
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-export const ADD_VOTE = 'ADD_VOTE'
-export const REMOVE_VOTE = 'REMOVE_VOTE'
-export const ADD_CONTENT = 'ADD_CONTENT'
-export const DELETE_CONTENT = 'DELETE_CONTENT'
-export const EDIT_CONTENT = 'EDIT_CONTENT'
 
 export function selectCategory(category) {
   return {
@@ -48,27 +43,17 @@ export function goFetchContent(category) {
 }
 
 
-export function upvote(id) {
-  return {
-    type: ADD_VOTE,
-    id
+export function changeVote (content) {
+  return function (dispatch) {
+    API.manageVotes(content).then((data) =>{
+      console.log('API MANAGE: ', data)
+      dispatch(receiveContent(data.category, data))
+      // need to reload page here
+    })
   }
 }
 
-export function downvote(id) {
-  return {
-    type: REMOVE_VOTE,
-    id
-  }
-}
-
-export function addContent() {
-  return {
-    type: ADD_CONTENT
-  }
-}
-
-export function writePost(content) {
+export function writePost (content) {
   return function (dispatch) {
     API.addPost(content).then((data) => {
       dispatch(receiveContent(data.category, data))
@@ -76,7 +61,7 @@ export function writePost(content) {
   }
 }
 
-export function removePost(id) {
+export function removePost (id) {
   return function (dispatch) {
     API.deletePost(id).then((data) => {
       console.log('API DELETE: ', data)
