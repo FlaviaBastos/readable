@@ -35,6 +35,9 @@ class ItemDetail extends React.Component {
 
   render() {
     const item = this.props.posts
+    console.log('ITEM: ', item[0])
+    console.log('EACH: ', item[0].comments) // this is undefined
+
 
     return (
       <div>
@@ -43,7 +46,23 @@ class ItemDetail extends React.Component {
             <h2>{data.title}</h2>
             <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}</small>
             <p>{data.body}</p>
-            <p>Other stuff</p>
+            <p>{data.comments}</p>
+            { data.comments && (
+              <div>
+                <h2>Comments:</h2>
+                <p>{data.comments[0]}</p>
+              </div>
+              // { data.comments.map(comment => (
+              //   <ItemSummary
+              //     summary={this.props.data}
+              //     type={this.props.type}
+              //     onPostClicked={(postId) =>
+              //       this.postClicked(postId)
+              //     }
+              //   />
+              // ))}
+            )}
+            {/* REMINDER: handle 0 comments situation */}
           </div>
         ))}
       </div>

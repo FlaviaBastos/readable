@@ -82,7 +82,11 @@ class App extends Component {
   showPost(postId) {
     let singlePost = this.props.posts.filter(item => item.id === postId)
     this.props.dispatch(selectCategory('single'))
-    this.props.dispatch(receiveContent('single', singlePost))
+    API.getComments(postId).then((data) => {
+      singlePost.map((each) => {
+        each.comments = data
+      })
+    }).then(this.props.dispatch(receiveContent('single', singlePost)))
   }
 
   render() {
@@ -133,9 +137,17 @@ class App extends Component {
               </div>
             )} />
             <Route path='/([^\/]+?)/([^\/]+?)' render={() => (
-              <ItemDetail
-                item={posts}
-              />
+              <div>
+                <ItemDetail
+                  item={posts}
+                />
+                {/* <ItemsList //listing comments for one post
+                  data={posts} // posts.comments to list through comments doesn't work
+                  type='posts' // maybe not necessary (TBD)
+                  onItemClicked={(id) =>
+                    this.showPost(id) //show single comment
+                } /> */}
+              </div>
             )} />
           </div>}
       </div>

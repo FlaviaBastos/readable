@@ -5,7 +5,7 @@ import {
   RECEIVE_CONTENT
 } from '../actions'
 
-function selectedCategory(state = 'redux', action) {
+function selectedCategory (state = 'redux', action) {
   switch (action.type) {
     case SELECT_CATEGORY:
       return action.category
@@ -14,7 +14,7 @@ function selectedCategory(state = 'redux', action) {
   }
 }
 
-function posts(
+function posts (
   state = {
     isFetching: false,
     items: []
@@ -36,7 +36,7 @@ function posts(
   }
 }
 
-function contentByCategory(state = {}, action) {
+function contentByCategory (state = {}, action) {
   switch (action.type) {
     case RECEIVE_CONTENT:
     case REQUEST_CONTENT:
