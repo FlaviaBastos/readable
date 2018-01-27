@@ -21,27 +21,50 @@ To run this app on your local machine follow these steps:
 │   ├── manifest.json
 │   └── index.html
 └── src
+    ├── actions
+        ├── index.js
     ├── components
+        ├── AddContent.js
         ├── App.js
+        ├── CategoryHeader.js
+        ├── DeleteContent.js
+        ├── ItemDetail.js
+        ├── ItemsList.js
+        ├── ItemSummary.js
+        ├── ManageVotes.js
+        ├── SortBar.js
+    ├── reducers
+        ├── index.js
     ├── utils
         ├── api.js
     ├── App.css    
     ├── App.test.js
-    ├── icons
-    │   ├── ...
-    │   ├── ...
-    │   └── ...
     ├── index.css
     ├── index.js
+    ├── logo.svg
+    ├── registerServiceWorker.js
 ```
 
 ## Backend Server
 
-Udacity has provided a [backend server](https://github.com/udacity/reactnd-project-readable-starter).
+Udacity has provided a [backend API server](https://github.com/udacity/reactnd-project-readable-starter).
 
-## Important
+#### Using the API Server
 
-The backend server supports a small, fixed number of categories that users can put posts into.
+* Install and start the API server:
+    - [clone](https://help.github.com/articles/cloning-a-repository/) the project
+    - navigate to the project's folder in your computer
+    - `cd api-server`
+    - `npm install`
+    - `node server`
+* In another terminal window, use Create React App to scaffold out the front-end
+    - `create-react-app frontend`
+    - `cd frontend`
+    - `npm start`
+
+#### Important
+
+The backend API server supports a small, fixed number of categories that users can put posts into.
 
 ## Contributing
 
