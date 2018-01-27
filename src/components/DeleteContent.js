@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { removePost } from '../actions'
+import { Button, Icon } from 'react-materialize'
 
 function mapStateToProps(state) {
   const { selectedCategory, contentByCategory } = state
@@ -37,7 +38,9 @@ class DeleteContent extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.handleDelete(this.props.id)}>Delete post</button>
+        <Button waves='light' onClick={() => this.handleDelete(this.props.id)}>
+          <Icon>delete</Icon>
+        </Button>
       </div>
     )
   }

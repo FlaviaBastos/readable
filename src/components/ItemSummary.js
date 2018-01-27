@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
+import { Collection, CollectionItem } from 'react-materialize'
 
 class ItemSummary extends React.Component {
   static propTypes = {
@@ -15,15 +16,26 @@ class ItemSummary extends React.Component {
     this.props.onPostClicked(id)
   }
 
+  findDate(timestamp) {
+    const mths = {'0': 'Jan', '1': 'Fev', '2': 'Mar', '3': 'Apr', '4': 'May', '5': 'Jun',
+                  '6': 'Jul', '7': 'Aug', '8': 'Set', '9': 'Oct', '10': 'Nov', '11': 'Dec'}
+    let date = new Date(timestamp)
+    let dateY = date.getFullYear()
+    let dateM = date.getMonth().toString()
+    let dateD = date.getDate()
+    let exactDate = `${dateD} ${mths[dateM]} ${dateY}`
+    return exactDate
+  }
+
   render() {
     const { summary, type } = this.props
     let url
 
     return (
-      <ul>
+      <Collection>
         {summary.map(data => (
           url = data.category + '/',
-          <li key={data.id}>
+          <CollectionItem key={data.id}>
             <div className="summary-title">
               {type === 'posts' &&
                 <Link to={{
@@ -35,14 +47,16 @@ class ItemSummary extends React.Component {
                 </Link>
               }
             </div>
-            <div className="summary-details">
-              by {data.author}, with {data.commentCount} comments and score {data.voteScore}
+            <div>
               <ManageVotes id={data.id} />
-              <DeleteContent id={data.id} />
+              <div className="">
+                by <strong>{data.author}</strong>, with {data.commentCount} comments and score {data.voteScore}, on {this.findDate(data.timestamp)}
+                <DeleteContent id={data.id} />
+              </div>
             </div>
-          </li>
+          </CollectionItem>
         ))}
-      </ul>
+      </Collection>
     )
   }
 }

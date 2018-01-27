@@ -91,14 +91,15 @@ class App extends Component {
 
   render() {
     console.log('Props ', this.props)
-    const { posts, isFetching } = this.props
+    const { posts, isFetching, selectedCategory } = this.props
 
     return (
       <div>
         <CategoryHeader
           onChangeCategory={(category) =>
-          this.loadCategory(category)
-        } />
+          this.loadCategory(category)}
+          selected={selectedCategory}
+        />
         {isFetching && posts.length === 0 && <h2>Loading....</h2>}
         {!isFetching && posts.length === 0 && <h2>There are no posts for your selection :(</h2>}
         {posts.length > 0 &&

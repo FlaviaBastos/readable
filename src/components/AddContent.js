@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { writePost } from '../actions'
 import serializeForm from 'form-serialize'
 import cuid from 'cuid'
+import { Button, Input, Row} from 'react-materialize'
 
 function mapStateToProps(state) {
   const { selectedCategory, contentByCategory } = state
@@ -37,18 +38,19 @@ class AddContent extends React.Component {
   render() {
     return (
       <div>
-        <p>Adding stuff.... +++</p>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" name="title" placeholder="Post title" />
-          <input type="text" name="author" placeholder="Author" />
-          <select name="category" >
-            <option value="react">react</option>
-            <option value="redux">redux</option>
-            <option value="udacity">udacity</option>
-          </select>
-          <textarea name="body" placeholder="Post content" />
-          <button type="submit">+ Add post</button>
-        </form>
+        <Row>
+          <form onSubmit={this.handleSubmit}>
+            <Input type="text" name="title" label="Post title" />
+            <Input type="text" name="author" label="Author" />
+            <Input type="select" label="Category" name="category" >
+              <option value="react">react</option>
+              <option value="redux">redux</option>
+              <option value="udacity">udacity</option>
+            </Input>
+            <textarea type="textearea" name="body" placeholder="Post content" />
+            <Button type="submit">+ Add post</Button>
+          </form>
+        </Row>
       </div>
     )
   }

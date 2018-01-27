@@ -43,7 +43,7 @@ class ItemDetail extends React.Component {
       <div>
         { item.map(data => (
           <div key={data.id}>
-            <h2>{data.title}</h2>
+            <h4>{data.title}</h4>
             <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}</small>
             <p>{data.body}</p>
             <p>{data.comments}</p>

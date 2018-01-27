@@ -1,7 +1,8 @@
 import React from 'react'
 import * as API from '../utils/api'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { Navbar, NavItem } from 'react-materialize'
 
 // Here I use local state to load the existing categories names
 // Once a category is selected, Redux handles updating store state with content
@@ -9,6 +10,7 @@ import { Link } from 'react-router-dom'
 class CategoryHeader extends React.Component {
   static propTypes = {
     onChangeCategory: PropTypes.func.isRequired,
+    selected: PropTypes.string.isRequired
   }
 
   constructor(props) {
@@ -30,23 +32,35 @@ class CategoryHeader extends React.Component {
 
   render() {
     const { categories } = this.state
+    const { selected } = this.props
+    console.log('SELECTED CAT: ', selected)
 
     return (
       <div className='cat'>
-        <ul>
-          <li key="all">
-            <Link to='/' value='/' onClick={(e) => this.changeCategory(e)}>
-              all
-            </Link>
-          </li>
-          {categories.map(data => (
-            <li key={data.name}>
-              <Link to={data.path} value={data.path} onClick={(e) => this.changeCategory(e)}>
-                {data.name}
-              </Link>
+        <Navbar brand='Readable' left>
+          <ul>
+            <li key="all">
+              <NavLink
+                to='/'
+                value='/'
+                activeClassName={selected === 'all' ? "active" : ""}
+                onClick={(e) => this.changeCategory(e)}>
+                all
+              </NavLink>
             </li>
-          ))}
-        </ul>
+            {categories.map(data => (
+              <li key={data.name}>
+                <NavLink
+                  to={data.path}
+                  value={data.path}
+                  activeClassName={selected === data.name ? "active" : ""} //not working
+                  onClick={(e) => this.changeCategory(e)}>
+                {data.name}
+              </NavLink>
+              </li>
+            ))}
+          </ul>
+        </Navbar>
       </div>
     )
   }
