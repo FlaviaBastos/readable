@@ -15,13 +15,30 @@ nav ul li a.active {
 .row {
     background-color: #e0e0e0;
 }
-
-.btn {
-    background-color: #006978;
+.collection .collection-item.avatar {
+    padding-left: 30px;
+    display: flex;
 }
 
-.btn:hover, .btn-large:hover {
+.collection .collection-item.avatar .votes {
+    display: flex;
+    flex-direction: column;
+}
+
+.collection .collection-item.avatar .info {
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    padding-left: 10px;
+}
+
+.btn, .btn-large, .btn-floating {
+    margin-top: 5px;
     background-color: #0097a7;
+}
+
+.btn:hover, .btn-floating:hover {
+    background-color: #006978;
 }
 
 a {

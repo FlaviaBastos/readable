@@ -32,31 +32,25 @@ class ItemSummary extends React.Component {
     let url
 
     return (
-      <Collection>
+      <ul className="collection">
         {summary.map(data => (
           url = data.category + '/',
-          <CollectionItem key={data.id}>
-            <div className="summary-title">
-              {type === 'posts' &&
-                <Link to={{
-                  pathname: url.concat(data.id)
-                  }}
-                  className="summary-link"
-                  onClick={() => this.sendPostID(data.id)}
-                  >{data.title}
-                </Link>
-              }
-            </div>
-            <div>
-              <ManageVotes id={data.id} />
-              <div className="">
-                by <strong>{data.author}</strong>, with {data.commentCount} comments and score {data.voteScore}, on {this.findDate(data.timestamp)}
-                <DeleteContent id={data.id} />
+          <li className="collection-item avatar" key={data.id}>
+            <ManageVotes id={data.id} />
+            <div className="info">
+              <Link to={{
+                pathname: url.concat(data.id)
+                }}
+                className="title"
+                onClick={() => this.sendPostID(data.id)}
+                >{data.title}
+              </Link>
+              <p>by <strong>{data.author}</strong>, with {data.commentCount} comments and score {data.voteScore}, on {this.findDate(data.timestamp)}</p>
               </div>
-            </div>
-          </CollectionItem>
+            <DeleteContent id={data.id} />
+          </li>
         ))}
-      </Collection>
+      </ul>
     )
   }
 }

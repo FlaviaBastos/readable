@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { changeVote } from '../actions'
-import { Button, Icon } from 'react-materialize'
 
 function mapStateToProps(state) {
   const { selectedCategory, contentByCategory } = state
@@ -37,13 +36,13 @@ class ManageVotes extends React.Component {
 
   render() {
     return(
-      <div>
-        <Button class="btn" onClick={() => this.handleVotes(this.props.id, 'upVote')}>
-          <Icon>arrow_upward</Icon>
-        </Button>
-        <Button class="btn" onClick={() => this.handleVotes(this.props.id, 'downVote')}>
-          <Icon>arrow_downward</Icon>
-        </Button>
+      <div className="votes">
+        <a className="btn-floating" onClick={() => this.handleVotes(this.props.id, 'upVote')}>
+          <i className="material-icons">arrow_upward</i>
+        </a>
+        <a className="btn-floating" onClick={() => this.handleVotes(this.props.id, 'downVote')}>
+          <i className="material-icons">arrow_downward</i>
+        </a>
       </div>
     )
   }
