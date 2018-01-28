@@ -5,6 +5,7 @@
   "dependencies": {
     "cuid": "^2.0.2",
     "form-serialize": "^0.7.2",
+    "materialize-css": "^0.100.2",
     "moment": "^2.20.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
