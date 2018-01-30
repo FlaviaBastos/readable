@@ -87,8 +87,13 @@ class App extends Component {
     this.props.dispatch(fetchComments(postId))
   }
 
+  setPostDisplayed (id) {
+    console.log('POST DISPLAYED: ', id)
+    return id
+  }
+
   render () {
-    const { posts, isFetching, selectedCategory } = this.props
+    const { posts, isFetching, selectedCategory, setPostDisplayed } = this.props
 
     return (
       <div>
@@ -116,8 +121,11 @@ class App extends Component {
                 } />
               </div>
             )} />
-            <Route exact path='/add/' render={() => (
-              <AddContent />
+            <Route exact path='/addpost/' render={() => (
+              <AddContent type='posts' />
+            )} />
+            <Route exact path='/addcomment/' render={() => (
+              <AddContent type='comments' id={setPostDisplayed} />
             )} />
             <Route path='/([^\/]+?)' render={() => (
               // display posts for one category
@@ -138,13 +146,9 @@ class App extends Component {
               <div>
                 <ItemDetail
                   item={posts}
-                />
-                {/* <ItemsList //listing comments for one post
-                  data={posts} // posts.comments to list through comments doesn't work
-                  type='posts' // maybe not necessary (TBD)
-                  onItemClicked={(id) =>
-                    this.showPost(id) //show single comment
-                } /> */}
+                  onPostDisplayed={(id) =>
+                    this.setPostDisplayed(id)
+                } />
               </div>
             )} />
           </div>}

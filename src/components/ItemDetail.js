@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
+import { Link } from 'react-router-dom'
 
 //  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
 function mapStateToProps (state) {
@@ -34,6 +35,10 @@ class ItemDetail extends React.Component {
     return timeAgo
   }
 
+  sendPostID = (id) => {
+    this.props.onPostDisplayed(id)
+  }
+
   render () {
     const item = this.props.posts
     const comm = this.props.commentsByPost
@@ -46,9 +51,15 @@ class ItemDetail extends React.Component {
             <h4>{data.title}</h4>
             <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}</small>
             <p>{data.body}</p>
+            <h4>Comments</h4>
+            <Link
+              to={{ pathname: '/addcomment/' }}
+              className="btn-floating"
+              onClick={() => this.sendPostID(data.id)}>
+              <i className="material-icons">add</i>
+            </Link>
           </div>
         ))}
-        <h4>Comments</h4>
         { comments && comments.length === 0 && <p>This post has no comments yet...</p>}
         { comments && comments.length > 0 && (
           <ul className="collection">

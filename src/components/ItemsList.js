@@ -26,7 +26,7 @@ class ItemsList extends React.Component {
         />
         <div className="add-link">
           <div className="fixed-action-btn">
-            <Link to='/add/' className="btn-floating">
+            <Link to='/addpost/' className="btn-floating">
               <i className="material-icons">add</i>
             </Link>
           </div>
