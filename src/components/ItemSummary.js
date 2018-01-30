@@ -35,7 +35,7 @@ class ItemSummary extends React.Component {
         {summary.map(data => (
           url = `${data.category}/`,
           <li className="collection-item avatar" key={data.id}>
-            <ManageVotes id={data.id} />
+            <ManageVotes id={data.id} type='posts'/>
             <div className="info">
               <Link to={{
                 pathname: url.concat(data.id)
@@ -44,9 +44,9 @@ class ItemSummary extends React.Component {
                 onClick={() => this.sendPostID(data.id)}
                 >{data.title}
               </Link>
-              <p>by <strong>{data.author}</strong>, with {data.commentCount} comments and score {data.voteScore}, on {this.findDate(data.timestamp)}</p>
+              <p>by <strong>{data.author}</strong>, with {data.commentCount} {data.commentCount > 1 ? 'comments' : 'comment'} and score {data.voteScore}, on {this.findDate(data.timestamp)}</p>
               </div>
-            <DeleteContent id={data.id} />
+            <DeleteContent id={data.id} type='posts'/>
           </li>
         ))}
       </ul>

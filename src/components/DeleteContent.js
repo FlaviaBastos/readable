@@ -26,18 +26,20 @@ class DeleteContent extends React.Component {
   }
 
   static propTypes = {
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired
   }
 
-  handleDelete = (id) => {
-    console.log('ID TO DELETE: ', id)
-    this.props.dispatch(removePost(id))
+  handleDelete = (id, forType) => {
+    const values = {id: id, type: forType}
+    this.props.dispatch(removePost(values))
   }
 
   render() {
+    const { id, type } = this.props
     return (
       <div>
-        <a className="btn-floating secondary-content" onClick={() => this.handleDelete(this.props.id)}>
+        <a className="btn-floating secondary-content" onClick={() => this.handleDelete(id, type)}>
           <i className="material-icons">delete</i>
         </a>
       </div>

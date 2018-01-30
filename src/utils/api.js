@@ -47,19 +47,19 @@ fetch(`${url}/posts`, {
 }).then(res => res.json())
   .then(data => data)
 
-export const deletePost = (postId) =>
-  fetch(`${url}/posts/${postId}`, {
+export const deletePost = (params) =>
+  fetch(`${url}/${params.type}/${params.id}`, {
     method: 'DELETE',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: postId
+    body: params.id
   }).then(res => res.json())
     .then(data => data)
 
 export const manageVotes = (params) =>
-  fetch(`${url}/posts/${params.id}`, {
+  fetch(`${url}/${params.type}/${params.id}`, {
     method: 'POST',
     headers: {
       ...headers,

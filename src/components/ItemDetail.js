@@ -54,12 +54,12 @@ class ItemDetail extends React.Component {
           <ul className="collection">
             { comments.map(comment => (
               <li className="collection-item avatar" key={comment.id}>
-                <ManageVotes id={comment.id} />
+                <ManageVotes id={comment.id} type='comments' />
                 <div className="info">
                   <h6>{comment.body}</h6>
                   <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {this.findDate(comment.timestamp)}</p>
                 </div>
-                <DeleteContent id={comment.id} />
+                <DeleteContent id={comment.id} type='comments' />
               </li>
             ))}
           </ul>

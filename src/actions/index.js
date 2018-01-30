@@ -74,9 +74,9 @@ export function writePost (content) {
   }
 }
 
-export function removePost (id) {
+export function removePost (content) {
   return function (dispatch) {
-    API.deletePost(id).then((data) => {
+    API.deletePost(content).then((data) => {
       console.log('API DELETE: ', data)
       // need to reload page here
       // it seems that no dispatch required (?!?!) but why?
