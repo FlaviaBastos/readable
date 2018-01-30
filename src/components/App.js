@@ -9,13 +9,13 @@ import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
 import AddContent from './AddContent'
 import { connect } from 'react-redux'
-import { receiveContent, selectCategory, goFetchContent } from '../actions'
+import { receiveContent, fetchComments, selectCategory, goFetchContent } from '../actions'
 
 function mapStateToProps(state) {
-  const { selectedCategory, contentByCategory } = state
+  const { selectedCategory, contentByCategory, commentsByPost } = state
   const {
     isFetching,
-    items: posts
+    items: posts,
   } = contentByCategory[selectedCategory] || {
     isFetching: true,
     items: []
@@ -23,22 +23,23 @@ function mapStateToProps(state) {
   return {
     selectedCategory,
     posts,
-    isFetching
+    isFetching,
+    commentsByPost
   }
 }
 
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.showPost = this.showPost.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { dispatch, selectedCategory } = this.props
     dispatch(goFetchContent(selectedCategory))
   }
 
-  loadCategory(category) {
+  loadCategory (category) {
     if (category === 'all') {
       this.props.dispatch(selectCategory(category))
       this.props.dispatch(receiveContent(category, this.state.contentByCategory))
@@ -50,7 +51,7 @@ class App extends Component {
     }
   }
 
-  changeFilter(filterName) {
+  changeFilter (filterName) {
     switch (filterName) {
       case 'recent':
         const newest = this.props.posts.sort((a, b) =>
@@ -79,17 +80,14 @@ class App extends Component {
     }
   }
 
-  showPost(postId) {
+  showPost (postId) {
     let singlePost = this.props.posts.filter(item => item.id === postId)
     this.props.dispatch(selectCategory('single'))
-    API.getComments(postId).then((data) => {
-      singlePost.map((each) => {
-        each.comments = data
-      })
-    }).then(this.props.dispatch(receiveContent('single', singlePost)))
+    this.props.dispatch(receiveContent('single', singlePost))
+    this.props.dispatch(fetchComments(postId))
   }
 
-  render() {
+  render () {
     console.log('Props ', this.props)
     const { posts, isFetching, selectedCategory } = this.props
 

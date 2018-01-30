@@ -1,8 +1,10 @@
 import * as API from '../utils/api'
 
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-export const REQUEST_CONTENT = ' REQUEST_CONTENT'
+export const REQUEST_CONTENT = 'REQUEST_CONTENT'
+export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
 export const RECEIVE_CONTENT = 'RECEIVE_CONTENT'
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 
 export function selectCategory (category) {
   return {
@@ -18,12 +20,26 @@ export function requestContent (category) {
   }
 }
 
+export function requestComments () {
+  return {
+    type: REQUEST_COMMENTS
+  }
+}
+
 export function receiveContent (category, data) {
   console.log('RECEIVE: ', category, data)
   return {
     type: RECEIVE_CONTENT,
     category,
     posts: data
+  }
+}
+
+export function receiveComments (data) {
+  console.log('RECEIVE COMM: ', data)
+  return {
+    type: RECEIVE_COMMENTS,
+    comments: data
   }
 }
 
@@ -66,6 +82,15 @@ export function removePost (id) {
       console.log('API DELETE: ', data)
       // need to reload page here
       // it seems that no dispatch required (?!?!) but why?
+    })
+  }
+}
+
+export function fetchComments (id) {
+  return function (dispatch) {
+    dispatch(requestComments())
+    API.getComments(id).then((data) => {
+      dispatch(receiveComments(data))
     })
   }
 }
