@@ -27,7 +27,6 @@ export function requestComments () {
 }
 
 export function receiveContent (category, data) {
-  console.log('RECEIVE: ', category, data)
   return {
     type: RECEIVE_CONTENT,
     category,
@@ -36,7 +35,6 @@ export function receiveContent (category, data) {
 }
 
 export function receiveComments (data) {
-  console.log('RECEIVE COMM: ', data)
   return {
     type: RECEIVE_COMMENTS,
     comments: data

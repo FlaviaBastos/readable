@@ -2,10 +2,7 @@ import React from 'react'
 import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
-import { Navbar, NavItem } from 'react-materialize'
-
-// Here I use local state to load the existing categories names
-// Once a category is selected, Redux handles updating store state with content
+import { Navbar } from 'react-materialize'
 
 class CategoryHeader extends React.Component {
   static propTypes = {
@@ -33,7 +30,6 @@ class CategoryHeader extends React.Component {
   render() {
     const { categories } = this.state
     const { selected } = this.props
-    console.log('SELECTED CAT: ', selected)
 
     return (
       <div className='cat'>

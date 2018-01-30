@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
-import { Collection, CollectionItem } from 'react-materialize'
 
 class ItemSummary extends React.Component {
   static propTypes = {
@@ -29,12 +28,12 @@ class ItemSummary extends React.Component {
 
   render() {
     const { summary, type } = this.props
-    let url
+    let url = ''
 
     return (
       <ul className="collection">
         {summary.map(data => (
-          url = data.category + '/',
+          url = `${data.category}/`,
           <li className="collection-item avatar" key={data.id}>
             <ManageVotes id={data.id} />
             <div className="info">

@@ -30,18 +30,14 @@ class ItemDetail extends React.Component {
     let dateD = date.getDate()
     let dateH = date.getHours()
     let dateMn = date.getMinutes()
-    // console.log('Date got: ', date, dateY, dateM, dateD, dateH, dateMn)
     let timeAgo = moment([dateY, dateM, dateD, dateH, dateMn]).fromNow()
-    // console.log('TIME AGO: ', timeAgo)
     return timeAgo
   }
 
   render () {
     const item = this.props.posts
-    console.log('ITEM: ', item[0])
     const comm = this.props.commentsByPost
     const comments = comm.comments
-    console.log('COMMENTS: ', comments) // this is an array
 
     return (
       <div>

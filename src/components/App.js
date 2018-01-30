@@ -88,7 +88,6 @@ class App extends Component {
   }
 
   render () {
-    console.log('Props ', this.props)
     const { posts, isFetching, selectedCategory } = this.props
 
     return (
