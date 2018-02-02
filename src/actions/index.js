@@ -70,6 +70,7 @@ export function writePost (content) {
   return function (dispatch) {
     API.addPost(content).then((data) => {
       dispatch(receiveContent(data.category, data))
+      // need to reload page here
     })
   }
 }

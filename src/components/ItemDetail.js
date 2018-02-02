@@ -53,7 +53,7 @@ class ItemDetail extends React.Component {
             <p>{data.body}</p>
             <h4>Comments</h4>
             <Link
-              to={{ pathname: '/addcomment/' }}
+              to={`/${data.category}/${data.id}/add_comment`}
               className="btn-floating"
               onClick={() => this.sendPostID(data.id)}>
               <i className="material-icons">add</i>

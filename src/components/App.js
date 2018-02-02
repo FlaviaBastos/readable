@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as API from '../utils/api'
-import { Route } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import CategoryHeader from './CategoryHeader'
 import SortBar from './SortBar'
 import ItemsList from './ItemsList'
@@ -11,7 +10,7 @@ import AddContent from './AddContent'
 import { connect } from 'react-redux'
 import { receiveContent, fetchComments, selectCategory, goFetchContent } from '../actions'
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   const { selectedCategory, contentByCategory, commentsByPost } = state
   const {
     isFetching,
@@ -121,13 +120,7 @@ class App extends Component {
                 } />
               </div>
             )} />
-            <Route exact path='/addpost/' render={() => (
-              <AddContent type='posts' />
-            )} />
-            <Route exact path='/addcomment/' render={() => (
-              <AddContent type='comments' id={setPostDisplayed} />
-            )} />
-            <Route path='/([^\/]+?)' render={() => (
+            <Route exact path='/:category' render={() => (
               // display posts for one category
               <div>
                 <SortBar
@@ -142,16 +135,22 @@ class App extends Component {
                 } />
               </div>
             )} />
-            <Route path='/([^\/]+?)/([^\/]+?)' render={() => (
-              <div>
-                <ItemDetail
-                  item={posts}
-                  onPostDisplayed={(id) =>
-                    this.setPostDisplayed(id)
-                } />
-              </div>
+            <Route exact path='/:category/:id' render={() => (
+              <ItemDetail
+                item={posts}
+                onPostDisplayed={(id) =>
+                  this.setPostDisplayed(id)
+              } />
             )} />
-          </div>}
+            <Route exact path='/add_post' component={AddContent} />
+            {/* <Route path='/add_post' render={() => (
+              <AddContent type='posts' />
+            )} /> */}
+            <Route exact path='/:category/:id/add_comment' render={() => (
+              <AddContent />
+            )} />
+          </div>
+        }
       </div>
     )
   }

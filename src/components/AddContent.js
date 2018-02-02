@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { writePost } from '../actions'
 import serializeForm from 'form-serialize'
 import cuid from 'cuid'
@@ -29,10 +30,6 @@ class AddContent extends React.Component {
     this.handleSubmitComm = this.handleSubmitComm.bind(this)
   }
 
-  static propTypes = {
-    type: PropTypes.string.isRequired
-  }
-
   handleSubmitPost = (e) => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
@@ -45,21 +42,26 @@ class AddContent extends React.Component {
   handleSubmitComm = (e) => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
+    console.log('VALUES FROM COMMENT: ', values)
+    console.log('VALUES FROM match: ', this.props.match)
     values.id = cuid()
     values.timestamp = Date.now()
     values.type = 'comments'
-    // add parentID here
+    values.parentId = this.props.match.params.id
     this.props.dispatch(writePost(values))
   }
 
   render() {
-    const { id, type } = this.props
-    console.log('ID: ', id)
+    const { type } = this.props
+    console.log('MATCH IN ADDCONTENT: ', this.props.match)
+    console.log('LOCATION IN ADDCONTENT: ', this.props)
 
     return (
       <div>
-        { type === 'posts' && (
+        <p>ADDING STUFF!!</p>
+        { this.props.match.url === '/add_post' && (
           <Row>
+            <p>ADDING NEW POST </p>
             <form onSubmit={this.handleSubmitPost}>
               <Input type="text" name="title" label="Post title" />
               <Input type="text" name="author" label="Author" />
@@ -73,8 +75,9 @@ class AddContent extends React.Component {
             </form>
           </Row>
         )}
-        { type === 'comments' && (
+        { this.props.match.path === '/:category/:id/add_comment' && (
           <Row>
+            <p>ADDING NEW COMMENT </p>
             <form onSubmit={this.handleSubmitComm}>
               <Input type="text" name="author" label="Author" />
               <textarea type="textearea" name="body" placeholder="Post content" />
@@ -87,4 +90,4 @@ class AddContent extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(AddContent)
+export default withRouter(connect(mapStateToProps)(AddContent))
