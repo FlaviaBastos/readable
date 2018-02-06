@@ -36,7 +36,12 @@ class ItemDetail extends React.Component {
   }
 
   sendPostID = (id) => {
+    console.log('ON SEND POST ID')
     this.props.onPostDisplayed(id)
+  }
+
+  onEditingPost() {
+    console.log('ON EDITING POST')
   }
 
   render () {
@@ -50,6 +55,9 @@ class ItemDetail extends React.Component {
           <div key={data.id}>
             <h4>{data.title}</h4>
             <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}</small>
+            <div>
+              <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
+            </div>
             <p>{data.body}</p>
             <h4>Comments</h4>
             <Link

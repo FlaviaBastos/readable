@@ -75,6 +75,14 @@ export function writePost (content) {
   }
 }
 
+export function writeComment (content) {
+  return function (dispatch) {
+    API.addPost(content).then((data) => {
+      dispatch(receiveComments(data))
+    })
+  }
+}
+
 export function removePost (content) {
   return function (dispatch) {
     API.deletePost(content).then((data) => {

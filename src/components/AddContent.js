@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { writePost } from '../actions'
+import { writeComment, writePost } from '../actions'
 import serializeForm from 'form-serialize'
 import cuid from 'cuid'
 import { Button, Input, Row} from 'react-materialize'
@@ -48,7 +48,7 @@ class AddContent extends React.Component {
     values.timestamp = Date.now()
     values.type = 'comments'
     values.parentId = this.props.match.params.id
-    this.props.dispatch(writePost(values))
+    this.props.dispatch(writeComment(values))
   }
 
   render() {
