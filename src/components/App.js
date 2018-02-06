@@ -30,7 +30,6 @@ function mapStateToProps (state) {
 class App extends Component {
   constructor (props) {
     super(props)
-    this.showPost = this.showPost.bind(this)
   }
 
   componentDidMount () {
@@ -77,13 +76,6 @@ class App extends Component {
         this.props.dispatch(selectCategory('all'))
         this.props.dispatch(receiveContent('all', this.state.contentByCategory))
     }
-  }
-
-  showPost (postId) {
-    let singlePost = this.props.posts.filter(item => item.id === postId)
-    this.props.dispatch(selectCategory('single'))
-    this.props.dispatch(receiveContent('single', singlePost))
-    this.props.dispatch(fetchComments(postId))
   }
 
   setPostDisplayed (id) {
@@ -135,13 +127,7 @@ class App extends Component {
                 } />
               </div>
             )} />
-            <Route exact path='/:category/:id' render={() => (
-              <ItemDetail
-                item={posts}
-                onPostDisplayed={(id) =>
-                  this.setPostDisplayed(id)
-              } />
-            )} />
+            <Route exact path='/:category/:id' component={ItemDetail} />
             <Route exact path='/add_post' component={AddContent} />
             {/* <Route path='/add_post' render={() => (
               <AddContent type='posts' />

@@ -56,6 +56,14 @@ export function goFetchContent (category) {
   }
 }
 
+export function getSinglePost (id) {
+  return function (dispatch) {
+    API.getPost(id).then((data) => {
+      dispatch(receiveContent('single', data))
+    })
+  }
+}
+
 export function changeVote (content) {
   return function (dispatch) {
     API.manageVotes(content).then((data) => {

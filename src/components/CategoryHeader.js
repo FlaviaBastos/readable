@@ -2,7 +2,7 @@ import React from 'react'
 import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
-import { Navbar } from 'react-materialize'
+// import { Navbar } from 'react-materialize'
 
 class CategoryHeader extends React.Component {
   static propTypes = {
@@ -32,32 +32,33 @@ class CategoryHeader extends React.Component {
     const { selected } = this.props
 
     return (
-      <div className='cat'>
-        <Navbar brand='Readable' left>
-          <ul>
-            <li key="all">
-              <NavLink
-                to='/'
-                value='/'
-                activeClassName={selected === 'all' ? "active" : ""}
-                onClick={(e) => this.changeCategory(e)}>
-                all
-              </NavLink>
-            </li>
-            {categories.map(data => (
-              <li key={data.name}>
+      <nav>
+        <div className="nav-wrapper">
+          <a href="/" className="brand-logo right">Readable</a>
+            <ul>
+              <li key="all">
                 <NavLink
-                  to={data.path}
-                  value={data.path}
-                  activeClassName={selected === data.name ? "active" : ""} //not working
+                  to='/'
+                  value='/'
+                  activeClassName={selected === 'all' ? "active" : ""}
                   onClick={(e) => this.changeCategory(e)}>
-                {data.name}
-              </NavLink>
+                  all
+                </NavLink>
               </li>
-            ))}
-          </ul>
-        </Navbar>
-      </div>
+              {categories.map(data => (
+                <li key={data.name}>
+                  <NavLink
+                    to={data.path}
+                    value={data.path}
+                    activeClassName={selected === data.name ? "active" : ""} //not working
+                    onClick={(e) => this.changeCategory(e)}>
+                  {data.name}
+                </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
     )
   }
 }
