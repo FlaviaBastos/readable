@@ -37,15 +37,15 @@ export const getSingleComment = (commentId) =>
     .then(data => data)
 
 export const addPost = (params) =>
-fetch(`${url}/${params.type}`, {
-  method: 'POST',
-  headers: {
-    ...headers,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(params)
-}).then(res => res.json())
-  .then(data => data)
+  fetch(`${url}/${params.type}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  }).then(res => res.json())
+    .then(data => data)
 
 export const deletePost = (params) =>
   fetch(`${url}/${params.type}/${params.id}`, {
