@@ -54,12 +54,24 @@ class ItemDetail extends React.Component {
         { item.map(data => (
           <div key={data.id}>
             <h4>{data.title}</h4>
-            <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}</small>
+            <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}, with score: {data.voteScore}</small>
             <div>
               <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
             </div>
+            <div>
+              <a className="btn-floating secondary-content" onClick={() => this.handleDelete()}>
+                <i className="material-icons">delete</i>
+              </a>
+            </div>
+            <div className="votes">
+              <a className="btn-floating" onClick={() => this.handleVotes()}>
+                <i className="material-icons">arrow_upward</i>
+              </a>
+              <a className="btn-floating" onClick={() => this.handleVotes()}>
+                <i className="material-icons">arrow_downward</i>
+              </a>
+            </div>
             <p>{data.body}</p>
-            <h4>Comments</h4>
             <Link
               to={`/${data.category}/${data.id}/add_comment`}
               className="btn-floating"
@@ -70,18 +82,24 @@ class ItemDetail extends React.Component {
         ))}
         { comments && comments.length === 0 && <p>This post has no comments yet...</p>}
         { comments && comments.length > 0 && (
-          <ul className="collection">
-            { comments.map(comment => (
-              <li className="collection-item avatar" key={comment.id}>
-                <ManageVotes id={comment.id} type='comments' />
-                <div className="info">
-                  <h6>{comment.body}</h6>
-                  <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {this.findDate(comment.timestamp)}</p>
-                </div>
-                <DeleteContent id={comment.id} type='comments' />
-              </li>
-            ))}
-          </ul>
+          <div>
+            <h4>{comments.length} Comments</h4>
+            <ul className="collection">
+              { comments.map(comment => (
+                <li className="collection-item avatar" key={comment.id}>
+                  <ManageVotes id={comment.id} type='comments' />
+                  <div className="info">
+                    <h6>{comment.body}</h6>
+                    <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {this.findDate(comment.timestamp)}</p>
+                  </div>
+                  <div>
+                    <a className="btn-floating" onClick={() => this.onEditing()}><i className="material-icons">mode_edit</i></a>
+                  </div>
+                  <DeleteContent id={comment.id} type='comments' />
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     )

@@ -31,6 +31,10 @@ class ItemsList extends React.Component {
     return exactDate
   }
 
+  onEditingPost = () => {
+    console.log('ON EDITING POST')
+  }
+
   render() {
     console.log('PROPS IN MATCH ITEMLIST: ', this.props)
     const { data, type } = this.props
@@ -50,6 +54,9 @@ class ItemsList extends React.Component {
                   </Link>
                   <p>by <strong>{item.author}</strong>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {this.findDate(item.timestamp)}</p>
                   </div>
+                <div>
+                  <a className="btn-floating" onClick={() => this.onEditingPost()}><i className="material-icons">mode_edit</i></a>
+                </div>
                 <DeleteContent id={item.id} type='posts'/>
               </li>
             ))}
