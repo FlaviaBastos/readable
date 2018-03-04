@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
 import { Link } from 'react-router-dom'
@@ -28,37 +27,28 @@ function mapStateToProps (state) {
 class Comments extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {editing: false}
+    this.state = {idToEdit: ''}
     this.id = this.props.id
     this.body = this.props.body
     this.author = this.props.author
     this.voteScore = this.props.voteScore
+    this.timestamp = this.props.timestamp
     // this.handleSubmitPost = this.handleSubmitPost.bind(this)
   }
 
-  findDate (timestamp) {
-    let date = new Date(timestamp)
-    let dateY = date.getFullYear()
-    let dateM = date.getMonth()
-    let dateD = date.getDate()
-    let dateH = date.getHours()
-    let dateMn = date.getMinutes()
-    let timeAgo = moment([dateY, dateM, dateD, dateH, dateMn]).fromNow()
-    return timeAgo
-  }
 
   // sendPostID = (id) => {
   //   console.log('ON SEND POST ID')
   //   this.props.onPostDisplayed(id)
   // }
   //
-  // onEditingPost() {
-  //   const { editing } = this.state
-  //   console.log('ON EDITING POST')
-  //   this.setState((state) => ({
-  //     editing: true
-  //   }))
-  // }
+  onEditComment (id) {
+    // const { editing } = this.state
+    console.log('ON EDITING COMMENT', id)
+    this.setState((state) => ({
+      idToEdit: id
+    }))
+  }
   //
   // handleSubmitPost = (e) => {
   //   e.preventDefault()
@@ -72,15 +62,16 @@ class Comments extends React.Component {
   // }
 
   render() {
-    const { id, author, body, voteScore } = this.props
-    console.log('PROS IN COMM: ', id, author, voteScore)
+    const idToEdit = this.state.idToEdit
+    const { id, author, body, voteScore, timestamp } = this.props
+    console.log('PROPS IN COMM: ', id, author, voteScore, timestamp)
 
     return (
       <div>
-        <p>will display single comment</p>
-        {/* {editing && (
+        {id === idToEdit && (
           <div>
-            <form onSubmit={this.handleSubmitPost}>
+            <p>will edit this comment: {idToEdit}</p>
+            {/* <form onSubmit={this.handleSubmitPost}>
               <div className="row">
                 <div className="input-field col s6">
                   <input defaultValue={item[0].title} id="post_title" type="text" className="validate" />
@@ -96,24 +87,22 @@ class Comments extends React.Component {
               <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i className="material-icons right">send</i>
               </button>
-            </form>
+            </form> */}
           </div>
-        )} */}
-        {/* {!editing && (
+        )}
+        {id !== idToEdit && (
           <div>
-            <li className="collection-item avatar" key={id}>
-              <ManageVotes id={id} type='comments' />
-              <div className="info">
-                <h6>{body}</h6>
-                <p>by <strong>{author}</strong>, with score {voteScore}, on {this.findDate(timestamp)}</p>
-              </div>
-              <div>
-                <a className="btn-floating" onClick={() => this.onEditing()}><i className="material-icons">mode_edit</i></a>
-              </div>
-              <DeleteContent id={id} type='comments' />
-            </li>
+            <ManageVotes id={id} type='comments' />
+            <div className="info">
+              <h6>{body}</h6>
+              <p>by <strong>{author}</strong>, with score {voteScore}, on {timestamp}</p>
+            </div>
+            <div>
+              <a className="btn-floating" onClick={() => this.onEditComment(id)}><i className="material-icons">mode_edit</i></a>
+            </div>
+            <DeleteContent id={id} type='comments' />
           </div>
-        )} */}
+        )}
       </div>
     )
   }

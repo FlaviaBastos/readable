@@ -135,7 +135,13 @@ class ItemDetail extends React.Component {
                 <ul className="collection">
                   {comments.map(comment => (
                     <li className="collection-item avatar" key={comment.id}>
-                      <Comments id={comment.id} author={comment.author} voteScore={comment.voteScore} body={comment.body} />
+                      <Comments
+                        id={comment.id}
+                        author={comment.author}
+                        voteScore={comment.voteScore}
+                        body={comment.body}
+                        timestamp={this.findDate(comment.timestamp)}
+                      />
                       {/* <ManageVotes id={comment.id} type='comments' />
                       <div className="info">
                         <h6>{comment.body}</h6>
