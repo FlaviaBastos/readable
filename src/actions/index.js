@@ -83,6 +83,22 @@ export function writeComment (content) {
   }
 }
 
+export function editPost (content) {
+  return function (dispatch) {
+    API.editContent(content).then((data) => {
+      dispatch(receiveContent(data.category, data))
+    })
+  }
+}
+
+export function editComment (content) {
+  return function (dispatch) {
+    API.editContent(content).then((data) => {
+      dispatch(receiveComments(data))
+    })
+  }
+}
+
 export function removePost (content) {
   return function (dispatch) {
     API.deletePost(content).then((data) => {

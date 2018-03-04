@@ -58,6 +58,17 @@ export const deletePost = (params) =>
   }).then(res => res.json())
     .then(data => data)
 
+export const editContent = (params) =>
+  fetch(`${url}/${params.type}/${params.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  }).then(res => res.json())
+    .then(data => data)
+
 export const manageVotes = (params) =>
   fetch(`${url}/${params.type}/${params.id}`, {
     method: 'POST',

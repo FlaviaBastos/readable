@@ -4,7 +4,7 @@ import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
-import { writeComment, writePost } from '../actions'
+import { editComment } from '../actions'
 
 //  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
 function mapStateToProps (state) {
@@ -28,79 +28,61 @@ class Comments extends React.Component {
   constructor(props) {
     super(props)
     this.state = {idToEdit: ''}
-    this.id = this.props.id
-    this.body = this.props.body
-    this.author = this.props.author
-    this.voteScore = this.props.voteScore
-    this.timestamp = this.props.timestamp
-    // this.handleSubmitPost = this.handleSubmitPost.bind(this)
+    this.comment = this.props.comment
+    this.handleEditComment = this.handleEditComment.bind(this)
   }
 
-
-  // sendPostID = (id) => {
-  //   console.log('ON SEND POST ID')
-  //   this.props.onPostDisplayed(id)
-  // }
-  //
   onEditComment (id) {
-    // const { editing } = this.state
     console.log('ON EDITING COMMENT', id)
     this.setState((state) => ({
       idToEdit: id
     }))
   }
-  //
-  // handleSubmitPost = (e) => {
-  //   e.preventDefault()
-  //   const item = this.props.posts
-  //   const body = document.getElementById('post_body').value;
-  //   const title = document.getElementById('post_title').value;
-  //   const edited = {title: title, body: body}
-  //   const values = Object.assign(item[0], edited)
-  //   values.type = 'posts'
-  //   this.props.dispatch(writePost(values))
-  // }
+
+  handleEditComment = (e) => {
+    e.preventDefault()
+    const edited = serializeForm(e.target, { hash: true })
+    console.log('VALUES FROM COMMENT: ', edited)
+    const comment = this.props.comment
+    // const body = document.getElementById('comment_body').value;
+    // const edited = {body: body}
+    const values = Object.assign(comment, edited)
+    values.type = 'comments'
+    this.props.dispatch(editComment(values))
+  }
 
   render() {
     const idToEdit = this.state.idToEdit
-    const { id, author, body, voteScore, timestamp } = this.props
-    console.log('PROPS IN COMM: ', id, author, voteScore, timestamp)
+    const { comment } = this.props
 
     return (
       <div>
-        {id === idToEdit && (
+        {comment.id === idToEdit && (
           <div>
-            <p>will edit this comment: {idToEdit}</p>
-            {/* <form onSubmit={this.handleSubmitPost}>
-              <div className="row">
-                <div className="input-field col s6">
-                  <input defaultValue={item[0].title} id="post_title" type="text" className="validate" />
-                  <label className="active" htmlFor="post_title">Title</label>
-                </div>
-              </div>
+            <form onSubmit={this.handleEditComment}>
               <div className="row">
                 <div className="input-field col s12">
-                  <textarea id="post_body" className="materialize-textarea" defaultValue={item[0].body}></textarea>
-                  <label className="active" htmlFor="textarea1">Post content</label>
+                  <textarea type="textearea" name="body" className="materialize-textarea" defaultValue={comment.body}></textarea>
+                  <label className="active" htmlFor="textarea1">Comment</label>
                 </div>
               </div>
               <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i className="material-icons right">send</i>
               </button>
-            </form> */}
+            </form>
           </div>
         )}
-        {id !== idToEdit && (
+        {comment.id !== idToEdit && (
           <div>
-            <ManageVotes id={id} type='comments' />
+            <ManageVotes id={comment.id} type='comments' />
             <div className="info">
-              <h6>{body}</h6>
-              <p>by <strong>{author}</strong>, with score {voteScore}, on {timestamp}</p>
+              <h6>{comment.body}</h6>
+              <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {comment.timestamp}</p>
             </div>
             <div>
-              <a className="btn-floating" onClick={() => this.onEditComment(id)}><i className="material-icons">mode_edit</i></a>
+              <a className="btn-floating" onClick={() => this.onEditComment(comment.id)}><i className="material-icons">mode_edit</i></a>
             </div>
-            <DeleteContent id={id} type='comments' />
+            <DeleteContent id={comment.id} type='comments' />
           </div>
         )}
       </div>

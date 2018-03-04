@@ -6,7 +6,7 @@ import DeleteContent from './DeleteContent'
 import Comments from './Comments'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
-import { writeComment, writePost } from '../actions'
+import { writeComment, writePost, editPost } from '../actions'
 
 //  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
 function mapStateToProps (state) {
@@ -30,7 +30,7 @@ class ItemDetail extends React.Component {
   constructor(props) {
   super(props)
   this.state = {editing: false}
-  this.handleSubmitPost = this.handleSubmitPost.bind(this)
+  this.handleEditPost = this.handleEditPost.bind(this)
   }
 
   findDate (timestamp) {
@@ -57,7 +57,7 @@ class ItemDetail extends React.Component {
     }))
   }
 
-  handleSubmitPost = (e) => {
+  handleEditPost = (e) => {
     e.preventDefault()
     const item = this.props.posts
     const body = document.getElementById('post_body').value;
@@ -65,7 +65,7 @@ class ItemDetail extends React.Component {
     const edited = {title: title, body: body}
     const values = Object.assign(item[0], edited)
     values.type = 'posts'
-    this.props.dispatch(writePost(values))
+    this.props.dispatch(editPost(values))
   }
 
   render() {
@@ -78,7 +78,7 @@ class ItemDetail extends React.Component {
       <div>
         {editing && (
           <div>
-            <form onSubmit={this.handleSubmitPost}>
+            <form onSubmit={this.handleEditPost}>
               <div className="row">
                 <div className="input-field col s6">
                   <input defaultValue={item[0].title} id="post_title" type="text" className="validate" />
@@ -135,22 +135,7 @@ class ItemDetail extends React.Component {
                 <ul className="collection">
                   {comments.map(comment => (
                     <li className="collection-item avatar" key={comment.id}>
-                      <Comments
-                        id={comment.id}
-                        author={comment.author}
-                        voteScore={comment.voteScore}
-                        body={comment.body}
-                        timestamp={this.findDate(comment.timestamp)}
-                      />
-                      {/* <ManageVotes id={comment.id} type='comments' />
-                      <div className="info">
-                        <h6>{comment.body}</h6>
-                        <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {this.findDate(comment.timestamp)}</p>
-                      </div>
-                      <div>
-                        <a className="btn-floating" onClick={() => this.onEditing()}><i className="material-icons">mode_edit</i></a>
-                      </div>
-                      <DeleteContent id={comment.id} type='comments' /> */}
+                      <Comments comment={comment}/>
                     </li>
                   ))}
                 </ul>
