@@ -51,7 +51,6 @@ class ItemDetail extends React.Component {
 
   onEditingPost() {
     const { editing } = this.state
-    console.log('ON EDITING POST')
     this.setState((state) => ({
       editing: true
     }))
@@ -59,10 +58,8 @@ class ItemDetail extends React.Component {
 
   handleEditPost = (e) => {
     e.preventDefault()
+    const edited = serializeForm(e.target, { hash: true })
     const item = this.props.posts
-    const body = document.getElementById('post_body').value;
-    const title = document.getElementById('post_title').value;
-    const edited = {title: title, body: body}
     const values = Object.assign(item[0], edited)
     values.type = 'posts'
     this.props.dispatch(editPost(values))
@@ -81,13 +78,13 @@ class ItemDetail extends React.Component {
             <form onSubmit={this.handleEditPost}>
               <div className="row">
                 <div className="input-field col s6">
-                  <input defaultValue={item[0].title} id="post_title" type="text" className="validate" />
+                  <input defaultValue={item[0].title} name="title" type="text" className="validate" />
                   <label className="active" htmlFor="post_title">Title</label>
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12">
-                  <textarea id="post_body" className="materialize-textarea" defaultValue={item[0].body}></textarea>
+                  <textarea name="body" className="materialize-textarea" defaultValue={item[0].body}></textarea>
                   <label className="active" htmlFor="textarea1">Post content</label>
                 </div>
               </div>

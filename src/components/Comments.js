@@ -33,7 +33,6 @@ class Comments extends React.Component {
   }
 
   onEditComment (id) {
-    console.log('ON EDITING COMMENT', id)
     this.setState((state) => ({
       idToEdit: id
     }))
@@ -42,11 +41,9 @@ class Comments extends React.Component {
   handleEditComment = (e) => {
     e.preventDefault()
     const edited = serializeForm(e.target, { hash: true })
-    console.log('VALUES FROM COMMENT: ', edited)
     const comment = this.props.comment
-    // const body = document.getElementById('comment_body').value;
-    // const edited = {body: body}
     const values = Object.assign(comment, edited)
+    values.timestamp = Date.now()
     values.type = 'comments'
     this.props.dispatch(editComment(values))
   }
