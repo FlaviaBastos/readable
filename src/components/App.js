@@ -98,7 +98,7 @@ class App extends Component {
       <div>
         <CategoryHeader
           onChangeCategory={(category) =>
-          this.loadCategory(category)}
+            this.loadCategory(category)}
           selected={selectedCategory}
         />
         {isFetching && posts.length === 0 && <h2>Loading....</h2>}
