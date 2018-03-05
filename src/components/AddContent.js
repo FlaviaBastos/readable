@@ -53,13 +53,13 @@ class AddContent extends React.Component {
 
   render() {
     const { type } = this.props
-    console.log('MATCH IN ADDCONTENT: ', this.props.match)
-    console.log('LOCATION IN ADDCONTENT: ', this.props)
+    console.log('MATCH IN ADDCONTENT: ', this.props.match.url)
+    console.log('LOCATION IN ADDCONTENT: ', this.props.location)
 
     return (
       <div>
         <p>ADDING STUFF!!</p>
-        { this.props.match.url === '/add_post' && (
+        {/* { this.props.match.url === '/add_content' && (
           <Row>
             <p>ADDING NEW POST </p>
             <form onSubmit={this.handleSubmitPost}>
@@ -84,7 +84,7 @@ class AddContent extends React.Component {
               <Button type="submit">+ Add comment</Button>
             </form>
           </Row>
-        )}
+        )} */}
       </div>
     )
   }

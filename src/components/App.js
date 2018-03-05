@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as API from '../utils/api'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import CategoryHeader from './CategoryHeader'
 import SortBar from './SortBar'
 import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
 import AddContent from './AddContent'
+import NotFound from './NotFound'
 import { connect } from 'react-redux'
 import { receiveContent, fetchComments, selectCategory, goFetchContent } from '../actions'
 
@@ -105,50 +106,13 @@ class App extends Component {
         {!isFetching && posts.length === 0 && <h2>There are no posts for your selection :(</h2>}
         {posts.length > 0 &&
           <div>
-            <Route exact path='/' render={() => (
-              // display all posts
-              <div>
-                <SortBar
-                  onChangeView={(byFilter) =>
-                  this.changeFilter(byFilter)
-                } />
-                <ItemsList
-                  data={posts}
-                  type='posts'
-                  onItemClicked={(id) =>
-                  this.showPost(id)
-                } />
-              </div>
-            )} />
-            <Route exact path='/:category' render={() => (
-              // display posts for one category
-              <div>
-                <SortBar
-                  onChangeView={(byFilter) =>
-                  this.changeFilter(byFilter)
-                } />
-                <ItemsList
-                  data={posts}
-                  type='posts'
-                  onItemClicked={(id) =>
-                    this.showPost(id)
-                } />
-              </div>
-            )} />
-            <Route exact path='/:category/:id' render={() => (
-              <ItemDetail
-                item={posts}
-                onPostDisplayed={(id) =>
-                  this.setPostDisplayed(id)
-              } />
-            )} />
-            <Route exact path='/add_post' component={AddContent} />
-            {/* <Route path='/add_post' render={() => (
-              <AddContent type='posts' />
-            )} /> */}
-            <Route exact path='/:category/:id/add_comment' render={() => (
-              <AddContent />
-            )} />
+            <Switch>
+              <Route exact path='/' component={ItemsList} />
+              <Route exact path='/add_content' component={AddContent} />
+              <Route exact path='/:category' component={ItemsList} />
+              <Route exact path='/:category/:id' component={ItemDetail} />
+              <Route component={NotFound} />
+            </Switch>
           </div>
         }
       </div>

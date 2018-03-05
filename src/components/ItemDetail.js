@@ -29,7 +29,10 @@ function mapStateToProps (state) {
 class ItemDetail extends React.Component {
   constructor(props) {
   super(props)
-  this.state = {editing: false}
+  this.state = {
+    editing: false,
+    id: this.props.match.params.id
+  }
   this.handleEditPost = this.handleEditPost.bind(this)
   }
 
@@ -66,10 +69,12 @@ class ItemDetail extends React.Component {
   }
 
   render() {
-    const item = this.props.posts
+    const { id } = this.state
+    const post = this.props.posts.find(post => post.id === id)
     const comm = this.props.commentsByPost
     const comments = comm.comments
     const editing = this.state.editing
+
 
     return (
       <div>
@@ -78,13 +83,13 @@ class ItemDetail extends React.Component {
             <form onSubmit={this.handleEditPost}>
               <div className="row">
                 <div className="input-field col s6">
-                  <input defaultValue={item[0].title} name="title" type="text" className="validate" />
+                  <input defaultValue={post.title} name="title" type="text" className="validate" />
                   <label className="active" htmlFor="post_title">Title</label>
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12">
-                  <textarea name="body" className="materialize-textarea" defaultValue={item[0].body}></textarea>
+                  <textarea name="body" className="materialize-textarea" defaultValue={post.body}></textarea>
                   <label className="active" htmlFor="textarea1">Post content</label>
                 </div>
               </div>
@@ -96,10 +101,10 @@ class ItemDetail extends React.Component {
         )}
         {!editing && (
           <div>
-            {item.map(data => (
-              <div key={data.id}>
-                <h4>{data.title}</h4>
-                <small>In {data.category}, by {data.author}, on {data.timestamp}, this is {this.findDate(data.timestamp)}, with score: {data.voteScore}</small>
+
+              <div key={post.id}>
+                <h4>{post.title}</h4>
+                <small>In {post.category}, by {post.author}, on {post.timestamp}, this is {this.findDate(post.timestamp)}, with score: {post.voteScore}</small>
                 <div>
                   <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
                 </div>
@@ -108,24 +113,16 @@ class ItemDetail extends React.Component {
                     <i className="material-icons">delete</i>
                   </a>
                 </div>
-                <ManageVotes id={data.id} type='posts'/>
-                {/* <div className="votes">
-                  <a className="btn-floating" onClick={() => this.handleVotes()}>
-                    <i className="material-icons">arrow_upward</i>
-                  </a>
-                  <a className="btn-floating" onClick={() => this.handleVotes()}>
-                    <i className="material-icons">arrow_downward</i>
-                  </a>
-                </div> */}
-                <p>{data.body}</p>
+                <ManageVotes id={post.id} type='posts'/>
+                <p>{post.body}</p>
                 <Link
-                  to={`/${data.category}/${data.id}/add_comment`}
+                  to={`/${post.category}/${post.id}/add_comment`}
                   className="btn-floating"
-                  onClick={() => this.sendPostID(data.id)}>
+                  onClick={() => this.sendPostID(post.id)}>
                   <i className="material-icons">add</i>
                 </Link>
               </div>
-            ))}
+
             {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
             {comments && comments.length > 0 && (
               <div>

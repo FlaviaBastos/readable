@@ -28,15 +28,18 @@ function mapStateToProps (state) {
 class ItemsList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {idToEdit: ''}
+    this.state = {
+      idToEdit: '',
+      category: this.props.match.params.category
+    }
     this.handleEditPost = this.handleEditPost.bind(this)
   }
 
-  static propTypes = {
-    data: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired,
-    onItemClicked: PropTypes.func.isRequired
-  }
+  // static propTypes = {
+  //   data: PropTypes.array.isRequired,
+  //   type: PropTypes.string.isRequired,
+  //   onItemClicked: PropTypes.func.isRequired
+  // }
 
   postClicked(id) {
     this.props.onItemClicked(id)
@@ -63,21 +66,22 @@ class ItemsList extends React.Component {
     e.preventDefault()
     const edited = serializeForm(e.target, { hash: true })
     const idToEdit = this.state.idToEdit
-    const toEdit = this.props.data.find(post => post.id === idToEdit)
+    const toEdit = this.props.posts.find(post => post.id === idToEdit)
     const values = Object.assign(toEdit, edited)
     values.type = 'posts'
     this.props.dispatch(editPost(values))
   }
 
   render() {
-    const { data, type } = this.props
-    const idToEdit = this.state.idToEdit
+    const { posts, type } = this.props
+    const { idToEdit, category } = this.state
+    console.log('PARAMS IN ITEMSLUST: ',this.props.match.params)
 
     return (
       <div>
         <div>
           <ul className="collection">
-            {data.map(item => (
+            {posts.map(item => (
               <li className="collection-item avatar" key={item.id}>
                 {item.id === idToEdit && (
                   <div>
@@ -123,7 +127,7 @@ class ItemsList extends React.Component {
         </div>
         <div className="add-link">
           <div className="fixed-action-btn">
-            <Link to="/add_post" className="btn-floating">
+            <Link to="/add_content" className="btn-floating">
               <i className="material-icons">add</i>
             </Link>
           </div>
