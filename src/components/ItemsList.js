@@ -54,7 +54,6 @@ class ItemsList extends React.Component {
   }
 
   onEditPost (id) {
-    console.log('ID TO EDIT: ', id)
     this.setState((state) => ({
       idToEdit: id
     }))

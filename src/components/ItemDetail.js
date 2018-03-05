@@ -108,14 +108,15 @@ class ItemDetail extends React.Component {
                     <i className="material-icons">delete</i>
                   </a>
                 </div>
-                <div className="votes">
+                <ManageVotes id={data.id} type='posts'/>
+                {/* <div className="votes">
                   <a className="btn-floating" onClick={() => this.handleVotes()}>
                     <i className="material-icons">arrow_upward</i>
                   </a>
                   <a className="btn-floating" onClick={() => this.handleVotes()}>
                     <i className="material-icons">arrow_downward</i>
                   </a>
-                </div>
+                </div> */}
                 <p>{data.body}</p>
                 <Link
                   to={`/${data.category}/${data.id}/add_comment`}
