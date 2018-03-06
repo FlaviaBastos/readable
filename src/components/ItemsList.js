@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import AddContent from './AddContent'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
-import { editPost } from '../actions'
+import { editPost, fetchComments } from '../actions'
 
 function mapStateToProps (state) {
   const { selectedCategory, contentByCategory, commentsByPost } = state
@@ -35,11 +33,9 @@ class ItemsList extends React.Component {
     this.handleEditPost = this.handleEditPost.bind(this)
   }
 
-  // static propTypes = {
-  //   data: PropTypes.array.isRequired,
-  //   type: PropTypes.string.isRequired,
-  //   onItemClicked: PropTypes.func.isRequired
-  // }
+  showPost (postId) {
+    this.props.dispatch(fetchComments(postId))
+  }
 
   postClicked(id) {
     this.props.onItemClicked(id)
@@ -73,8 +69,8 @@ class ItemsList extends React.Component {
   }
 
   render() {
-    const { posts, type } = this.props
-    const { idToEdit, category } = this.state
+    const { posts } = this.props
+    const { idToEdit } = this.state
     console.log('PARAMS IN ITEMSLUST: ',this.props.match.params)
 
     return (
@@ -110,7 +106,8 @@ class ItemsList extends React.Component {
                     <div className="info">
                       <Link to={`${item.category}/${item.id}`}
                         className="title"
-                        onClick={() => this.postClicked(item.id)}
+                        onClick={() => this.showPost(item.id)}
+                        // onClick={() => this.postClicked(item.id)}
                         >{item.title}
                       </Link>
                       <p>by <strong>{item.author}</strong>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {this.findDate(item.timestamp)}</p>

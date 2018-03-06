@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
-import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import { editComment } from '../actions'
 

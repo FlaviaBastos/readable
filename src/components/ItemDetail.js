@@ -6,7 +6,7 @@ import DeleteContent from './DeleteContent'
 import Comments from './Comments'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
-import { writeComment, writePost, editPost } from '../actions'
+import { editPost } from '../actions'
 
 //  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
 function mapStateToProps (state) {
@@ -75,7 +75,6 @@ class ItemDetail extends React.Component {
     const comments = comm.comments
     const editing = this.state.editing
 
-
     return (
       <div>
         {editing && (
@@ -101,18 +100,13 @@ class ItemDetail extends React.Component {
         )}
         {!editing && (
           <div>
-
               <div key={post.id}>
                 <h4>{post.title}</h4>
                 <small>In {post.category}, by {post.author}, on {post.timestamp}, this is {this.findDate(post.timestamp)}, with score: {post.voteScore}</small>
                 <div>
                   <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
                 </div>
-                <div>
-                  <a className="btn-floating secondary-content" onClick={() => this.handleDelete()}>
-                    <i className="material-icons">delete</i>
-                  </a>
-                </div>
+                <DeleteContent id={post.id} type='posts'/>
                 <ManageVotes id={post.id} type='posts'/>
                 <p>{post.body}</p>
                 <Link

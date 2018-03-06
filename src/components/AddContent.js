@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { writeComment, writePost } from '../actions'
@@ -42,8 +41,6 @@ class AddContent extends React.Component {
   handleSubmitComm = (e) => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
-    console.log('VALUES FROM COMMENT: ', values)
-    console.log('VALUES FROM match: ', this.props.match)
     values.id = cuid()
     values.timestamp = Date.now()
     values.type = 'comments'
@@ -52,16 +49,10 @@ class AddContent extends React.Component {
   }
 
   render() {
-    const { type } = this.props
-    console.log('MATCH IN ADDCONTENT: ', this.props.match.url)
-    console.log('LOCATION IN ADDCONTENT: ', this.props.location)
-
     return (
       <div>
-        <p>ADDING STUFF!!</p>
-        {/* { this.props.match.url === '/add_content' && (
+        { this.props.match.url === '/add_content' && (
           <Row>
-            <p>ADDING NEW POST </p>
             <form onSubmit={this.handleSubmitPost}>
               <Input type="text" name="title" label="Post title" />
               <Input type="text" name="author" label="Author" />
@@ -77,14 +68,13 @@ class AddContent extends React.Component {
         )}
         { this.props.match.path === '/:category/:id/add_comment' && (
           <Row>
-            <p>ADDING NEW COMMENT </p>
             <form onSubmit={this.handleSubmitComm}>
               <Input type="text" name="author" label="Author" />
               <textarea type="textearea" name="body" placeholder="Post content" />
               <Button type="submit">+ Add comment</Button>
             </form>
           </Row>
-        )} */}
+        )}
       </div>
     )
   }

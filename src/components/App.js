@@ -29,11 +29,6 @@ function mapStateToProps (state) {
 }
 
 class App extends Component {
-  constructor (props) {
-    super(props)
-    this.showPost = this.showPost.bind(this)
-  }
-
   componentDidMount () {
     const { dispatch, selectedCategory } = this.props
     dispatch(goFetchContent(selectedCategory))
@@ -80,20 +75,8 @@ class App extends Component {
     }
   }
 
-  showPost (postId) {
-    let singlePost = this.props.posts.filter(item => item.id === postId)
-    this.props.dispatch(selectCategory('single'))
-    this.props.dispatch(receiveContent('single', singlePost))
-    this.props.dispatch(fetchComments(postId))
-  }
-
-  setPostDisplayed (id) {
-    console.log('POST DISPLAYED: ', id)
-    return id
-  }
-
   render () {
-    const { posts, isFetching, selectedCategory, setPostDisplayed } = this.props
+    const { posts, isFetching, selectedCategory } = this.props
 
     return (
       <div>
@@ -111,6 +94,7 @@ class App extends Component {
               <Route exact path='/add_content' component={AddContent} />
               <Route exact path='/:category' component={ItemsList} />
               <Route exact path='/:category/:id' component={ItemDetail} />
+              <Route exact path='/:category/:id/add_comment' component={AddContent} />
               <Route component={NotFound} />
             </Switch>
           </div>
