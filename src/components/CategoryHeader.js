@@ -49,8 +49,8 @@ class CategoryHeader extends React.Component {
               {categories.map(data => (
                 <li key={data.name}>
                   <NavLink
-                    to={data.path}
-                    value={data.path}
+                    to={'/' + data.path}
+                    value={'/' + data.path}
                     activeClassName={selected === data.name ? "active" : ""} //not working
                     onClick={(e) => this.changeCategory(e)}>
                     {data.name}
