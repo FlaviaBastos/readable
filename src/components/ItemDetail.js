@@ -4,6 +4,7 @@ import moment from 'moment'
 import ManageVotes from './ManageVotes'
 import DeleteContent from './DeleteContent'
 import Comments from './Comments'
+import NotFound from './NotFound'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import { editPost } from '../actions'
@@ -75,6 +76,10 @@ class ItemDetail extends React.Component {
     const comments = comm.comments
     const editing = this.state.editing
 
+    if (!post) {
+      return <NotFound />
+    }
+
     return (
       <div>
         {editing && (
@@ -100,22 +105,22 @@ class ItemDetail extends React.Component {
         )}
         {!editing && (
           <div>
-              <div key={post.id}>
-                <h4>{post.title}</h4>
-                <small>In {post.category}, by {post.author}, on {post.timestamp}, this is {this.findDate(post.timestamp)}, with score: {post.voteScore}</small>
-                <div>
-                  <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
-                </div>
-                <DeleteContent id={post.id} type='posts'/>
-                <ManageVotes id={post.id} type='posts'/>
-                <p>{post.body}</p>
-                <Link
-                  to={`/${post.category}/${post.id}/add_comment`}
-                  className="btn-floating"
-                  onClick={() => this.sendPostID(post.id)}>
-                  <i className="material-icons">add</i>
-                </Link>
+            <div key={post.id}>
+              <h4>{post.title}</h4>
+              <small>In {post.category}, by {post.author}, on {post.timestamp}, this is {this.findDate(post.timestamp)}, with score: {post.voteScore}</small>
+              <div>
+                <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
               </div>
+              <DeleteContent id={post.id} type='posts'/>
+              <ManageVotes id={post.id} type='posts'/>
+              <p>{post.body}</p>
+              <Link
+                to={`/${post.category}/${post.id}/add_comment`}
+                className="btn-floating"
+                onClick={() => this.sendPostID(post.id)}>
+                <i className="material-icons">add</i>
+              </Link>
+            </div>
 
             {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
             {comments && comments.length > 0 && (
