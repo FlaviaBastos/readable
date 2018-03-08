@@ -5,6 +5,7 @@ import DeleteContent from './DeleteContent'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import { editPost, fetchComments } from '../actions'
+import dateToDisplay from '../utils/helpers'
 
 function mapStateToProps (state) {
   const { selectedCategory, contentByCategory, commentsByPost } = state
@@ -41,17 +42,6 @@ class ItemsList extends React.Component {
     this.props.onItemClicked(id)
   }
 
-  findDate(timestamp) {
-    const mths = {'0': 'Jan', '1': 'Fev', '2': 'Mar', '3': 'Apr', '4': 'May', '5': 'Jun',
-                  '6': 'Jul', '7': 'Aug', '8': 'Set', '9': 'Oct', '10': 'Nov', '11': 'Dec'}
-    let date = new Date(timestamp)
-    let dateY = date.getFullYear()
-    let dateM = date.getMonth().toString()
-    let dateD = date.getDate()
-    let exactDate = `${dateD} ${mths[dateM]} ${dateY}`
-    return exactDate
-  }
-
   onEditPost (id) {
     this.setState((state) => ({
       idToEdit: id
@@ -71,7 +61,6 @@ class ItemsList extends React.Component {
   render() {
     const { posts } = this.props
     const { idToEdit } = this.state
-    console.log('PARAMS IN ITEMSLUST: ',this.props.match.params)
 
     return (
       <div>
@@ -107,10 +96,9 @@ class ItemsList extends React.Component {
                       <Link to={`${item.category}/${item.id}`}
                         className="title"
                         onClick={() => this.showPost(item.id)}
-                        // onClick={() => this.postClicked(item.id)}
                         >{item.title}
                       </Link>
-                      <p>by <strong>{item.author}</strong>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {this.findDate(item.timestamp)}</p>
+                      <p>by <strong>{item.author}</strong>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {dateToDisplay(item.timestamp)}</p>
                       </div>
                     <div>
                       <a className="btn-floating" onClick={() => this.onEditPost(item.id)}><i className="material-icons">mode_edit</i></a>

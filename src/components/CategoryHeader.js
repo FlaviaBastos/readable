@@ -36,7 +36,7 @@ class CategoryHeader extends React.Component {
           <div className="nav-wrapper">
             <a href="#" className="brand-logo right">Readable</a>
             <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
-            <ul id="nav-mobile" className="left hide-on-med-and-down">
+            <ul className="left hide-on-med-and-down">
               <li>
                 <NavLink
                   to='/'
@@ -58,6 +58,28 @@ class CategoryHeader extends React.Component {
                 </li>
               ))}
             </ul>
+            {/* <ul className="side-nav" id="mobile-demo">
+              <li>
+                <NavLink
+                  to='/'
+                  value='/'
+                  activeClassName={selected === 'all' ? "active" : ""}
+                  onClick={(e) => this.changeCategory(e)}>
+                  all
+                </NavLink>
+              </li>
+              {categories.map(data => (
+                <li key={data.name}>
+                  <NavLink
+                    to={'/' + data.path}
+                    value={'/' + data.path}
+                    activeClassName={selected === data.name ? "active" : ""} //not working
+                    onClick={(e) => this.changeCategory(e)}>
+                    {data.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul> */}
           </div>
         </nav>
       </div>

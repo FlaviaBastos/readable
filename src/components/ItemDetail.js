@@ -8,6 +8,7 @@ import NotFound from './NotFound'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import { editPost } from '../actions'
+import dateToDisplay from '../utils/helpers'
 
 //  Might not need access to store state here... I'm not changing state, only displaying it.... (?)
 function mapStateToProps (state) {
@@ -35,17 +36,6 @@ class ItemDetail extends React.Component {
     id: this.props.match.params.id
   }
   this.handleEditPost = this.handleEditPost.bind(this)
-  }
-
-  findDate (timestamp) {
-    let date = new Date(timestamp)
-    let dateY = date.getFullYear()
-    let dateM = date.getMonth()
-    let dateD = date.getDate()
-    let dateH = date.getHours()
-    let dateMn = date.getMinutes()
-    let timeAgo = moment([dateY, dateM, dateD, dateH, dateMn]).fromNow()
-    return timeAgo
   }
 
   sendPostID = (id) => {
@@ -107,7 +97,7 @@ class ItemDetail extends React.Component {
           <div>
             <div key={post.id}>
               <h4>{post.title}</h4>
-              <small>In {post.category}, by {post.author}, on {post.timestamp}, this is {this.findDate(post.timestamp)}, with score: {post.voteScore}</small>
+              <small>In {post.category}, by {post.author}, on {post.timestamp}, on {dateToDisplay(post.timestamp)}, with score: {post.voteScore}</small>
               <div>
                 <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
               </div>
