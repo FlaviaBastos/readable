@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     isFetching: true,
     items: []
   }
+  console.log('MAP STATE TO PROPS')
   return {
     selectedCategory,
     posts,

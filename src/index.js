@@ -6,7 +6,7 @@ import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { selectCategory, fetchContent } from './actions'
+import { fetchCategories, fetchPosts } from './actions'
 import rootReducer from './reducers'
 import { Provider } from 'react-redux'
 
@@ -18,9 +18,8 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 )
 
-store.dispatch(selectCategory('all'))
-store
-  .dispatch(fetchContent('all'))
+store.dispatch(fetchCategories())
+store.dispatch(fetchPosts())
 
 ReactDOM.render(
   <Provider store={store}>

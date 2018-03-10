@@ -6,20 +6,6 @@ import { NavLink } from 'react-router-dom'
 class CategoryHeader extends React.Component {
   static propTypes = {
     onChangeCategory: PropTypes.func.isRequired,
-    selected: PropTypes.string.isRequired
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      categories: []
-    }
-  }
-
-  componentDidMount() {
-    API.getCats().then((categories) => {
-      this.setState({ categories: categories.categories })
-    })
   }
 
   changeCategory = (e) => {
@@ -27,8 +13,7 @@ class CategoryHeader extends React.Component {
   }
 
   render() {
-    const { categories } = this.state
-    const { selected } = this.props
+    const { categories } = this.props
 
     return (
       <div className='cat'>
@@ -41,45 +26,23 @@ class CategoryHeader extends React.Component {
                 <NavLink
                   to='/'
                   value='/'
-                  activeClassName={selected === 'all' ? "active" : ""}
                   onClick={(e) => this.changeCategory(e)}>
                   all
                 </NavLink>
               </li>
-              {categories.map(data => (
-                <li key={data.name}>
-                  <NavLink
-                    to={'/' + data.path}
-                    value={'/' + data.path}
-                    activeClassName={selected === data.name ? "active" : ""} //not working
-                    onClick={(e) => this.changeCategory(e)}>
-                    {data.name}
-                  </NavLink>
-                </li>
-              ))}
+              {categories && (
+                categories.map(data => (
+                  <li key={data.name}>
+                    <NavLink
+                      to={'/' + data.path}
+                      value={'/' + data.path}
+                      onClick={(e) => this.changeCategory(e)}>
+                      {data.name}
+                    </NavLink>
+                  </li>
+                ))
+              )}
             </ul>
-            {/* <ul className="side-nav" id="mobile-demo">
-              <li>
-                <NavLink
-                  to='/'
-                  value='/'
-                  activeClassName={selected === 'all' ? "active" : ""}
-                  onClick={(e) => this.changeCategory(e)}>
-                  all
-                </NavLink>
-              </li>
-              {categories.map(data => (
-                <li key={data.name}>
-                  <NavLink
-                    to={'/' + data.path}
-                    value={'/' + data.path}
-                    activeClassName={selected === data.name ? "active" : ""} //not working
-                    onClick={(e) => this.changeCategory(e)}>
-                    {data.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul> */}
           </div>
         </nav>
       </div>

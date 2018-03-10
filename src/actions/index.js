@@ -1,67 +1,42 @@
 import * as API from '../utils/api'
 
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-export const REQUEST_CONTENT = 'REQUEST_CONTENT'
-export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
-export const RECEIVE_CONTENT = 'RECEIVE_CONTENT'
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
+export const CATEGORIES = 'CATEGORIES'
+export const LOAD_POSTS = 'LOAD_POSTS'
+export const ADD_POST = 'ADD_POST'
 
-export function selectCategory (category) {
+export function loadCategories (categories) {
   return {
-    type: SELECT_CATEGORY,
-    category
+    type: CATEGORIES,
+    categories
   }
 }
 
-export function requestContent (category) {
+export function loadPosts (posts) {
   return {
-    type: REQUEST_CONTENT,
-    category
+    type: LOAD_POSTS,
+    posts
   }
 }
 
-export function requestComments () {
+export function addPost (post) {
   return {
-    type: REQUEST_COMMENTS
+    type: ADD_POST,
+    post
   }
 }
 
-export function receiveContent (category, data) {
-  return {
-    type: RECEIVE_CONTENT,
-    category,
-    posts: data
-  }
-}
-
-export function receiveComments (data) {
-  return {
-    type: RECEIVE_COMMENTS,
-    comments: data
-  }
-}
-
-export function fetchContent (category) {
+export function fetchCategories () {
   return function (dispatch) {
-    dispatch(requestContent(category))
-    API.getAll().then((data) => {
-      dispatch(receiveContent(category, data))
+    API.getCats().then((data) => {
+      dispatch(loadCategories(data.categories))
     })
   }
 }
 
-export function goFetchContent (category) {
-  return (dispatch, getState) => {
-    return dispatch(fetchContent(category))
-  }
-}
-
-export function changeVote (content) {
+export function fetchPosts () {
   return function (dispatch) {
-    API.manageVotes(content).then((data) => {
-      console.log('API MANAGE: ', data)
-      dispatch(receiveContent(data.category, data))
-      // need to reload page here
+    API.getAll().then((data) => {
+      dispatch(loadPosts(data))
     })
   }
 }
@@ -69,51 +44,16 @@ export function changeVote (content) {
 export function writePost (content) {
   return function (dispatch) {
     API.addPost(content).then((data) => {
-      dispatch(receiveContent(data.category, data))
-      // need to reload page here
+      dispatch(addPost(data))
     })
   }
 }
 
-export function writeComment (content) {
-  return function (dispatch) {
-    API.addPost(content).then((data) => {
-      dispatch(receiveComments(data))
-    })
-  }
-}
-
-export function editPost (content) {
-  return function (dispatch) {
-    API.editContent(content).then((data) => {
-      dispatch(receiveContent(data.category, data))
-    })
-  }
-}
-
-export function editComment (content) {
-  return function (dispatch) {
-    API.editContent(content).then((data) => {
-      dispatch(receiveComments(data))
-    })
-  }
-}
-
-export function removePost (content) {
-  return function (dispatch) {
-    API.deletePost(content).then((data) => {
-      console.log('API DELETE: ', data)
-      // need to reload page here
-      // it seems that no dispatch required (?!?!) but why?
-    })
-  }
-}
-
-export function fetchComments (id) {
-  return function (dispatch) {
-    dispatch(requestComments())
-    API.getComments(id).then((data) => {
-      dispatch(receiveComments(data))
-    })
-  }
-}
+// export function fetchComments (id) {
+//   return function (dispatch) {
+//     dispatch(requestComments())
+//     API.getComments(id).then((data) => {
+//       dispatch(receiveComments(data))
+//     })
+//   }
+// }
