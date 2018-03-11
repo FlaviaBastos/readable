@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, editPost, changeVote } from '../actions'
+import { fetchPosts, fetchPost, editPost, changeVote, removePost } from '../actions'
 import serializeForm from 'form-serialize'
 
 class ItemsList extends React.Component {
@@ -13,6 +13,7 @@ class ItemsList extends React.Component {
     }
     this.handleEditPost = this.handleEditPost.bind(this)
     this.handleVotes = this.handleVotes.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   showPost (postId) {
@@ -41,9 +42,15 @@ class ItemsList extends React.Component {
     this.props.dispatch(changeVote(values))
   }
 
+  handleDelete = (id, forType) => {
+    const values = {id: id, type: forType}
+    this.props.dispatch(removePost(values))
+  }
+
   render() {
     const { posts } = this.props
     const { idToEdit } = this.state
+    console.log('POSTS: ', posts)
 
     return (
       <div>
@@ -94,6 +101,11 @@ class ItemsList extends React.Component {
                         </div>
                         <div>
                           <a className="btn-floating" onClick={() => this.onEditPost(item.id)}><i className="material-icons">mode_edit</i></a>
+                        </div>
+                        <div>
+                          <a className="btn-floating secondary-content" onClick={() => this.handleDelete(item.id, 'posts')}>
+                            <i className="material-icons">delete</i>
+                          </a>
                         </div>
                       </div>
                     )}

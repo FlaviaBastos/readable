@@ -10,7 +10,9 @@ import {
   RELOAD_POST,
   VOTED_POST,
   VOTED_SINGLE_POST,
-  VOTED_COMMENT
+  VOTED_COMMENT,
+  DELETED_POST,
+  DELETED_SINGLE_POST
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -56,6 +58,17 @@ function posts (state = {}, action) {
       return {
         ...state,
         posts: action.post
+      }
+    case DELETED_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.post.id)
+      }
+    case DELETED_SINGLE_POST:
+      console.log('ACT: ', action)
+      return {
+        ...state,
+        posts: {}
       }
     default:
       return state

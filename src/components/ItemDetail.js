@@ -1,21 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, BrowserRouter, Redirect } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, fetchComments, changePostVote } from '../actions'
+import { fetchPost, fetchComments, changePostVote, removeSinglePost } from '../actions'
 import Comments from './Comments'
 import serializeForm from 'form-serialize'
 import { editPost } from '../actions'
-import ManageVotes from './ManageVotes'
 
 class ItemDetail extends React.Component {
   constructor() {
     super()
     this.state = {
-      editing: false
+      editing: false,
+      redir_home: false
     }
     this.handleEditPost = this.handleEditPost.bind(this)
     this.handleVotes = this.handleVotes.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   componentDidMount () {
@@ -46,10 +47,26 @@ class ItemDetail extends React.Component {
     this.props.dispatch(changePostVote(values))
   }
 
+  handleDelete = (id, forType) => {
+    const values = {id: id, type: forType}
+    this.props.dispatch(removeSinglePost(values))
+    this.setState({ redir_home: true })
+  }
+
   render () {
     const posts = this.props.posts
     const comments = this.props.commentsByPost
     const editing = this.state.editing
+    const { redir_home } = this.state
+
+    if (redir_home) {
+      return (
+        <div>
+          <BrowserRouter forceRefresh={true} />
+          <Redirect to="/" />
+        </div>
+      )
+    }
 
     return (
       <div>
@@ -97,6 +114,11 @@ class ItemDetail extends React.Component {
                 onClick={() => this.sendPostID(posts.id)}>
                 <i className="material-icons">add</i>
               </Link>
+              <div>
+                <a className="btn-floating secondary-content" onClick={() => this.handleDelete(posts.id, 'posts')}>
+                  <i className="material-icons">delete</i>
+                </a>
+              </div>
             </div>
 
             {comments && comments.length === 0 && <p>This post has no comments yet...</p>}

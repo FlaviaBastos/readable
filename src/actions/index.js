@@ -11,6 +11,8 @@ export const RELOAD_POST = 'RELOAD_POST'
 export const VOTED_POST = 'VOTED_POST'
 export const VOTED_SINGLE_POST = 'VOTED_SINGLE_POST'
 export const VOTED_COMMENT = 'VOTED_COMMENT'
+export const DELETED_POST = 'DELETED_POST'
+export const DELETED_SINGLE_POST = 'DELETED_SINGLE_POST'
 
 export function loadCategories (categories) {
   return {
@@ -86,6 +88,20 @@ export function votedComment (comment) {
   return {
     type: VOTED_COMMENT,
     comment
+  }
+}
+
+export function deletedPost (post) {
+  return {
+    type: DELETED_POST,
+    post
+  }
+}
+
+export function deletedSinglePost (post) {
+  return {
+    type: DELETED_SINGLE_POST,
+    post
   }
 }
 
@@ -173,6 +189,23 @@ export function changeCommentVote (content) {
   return function (dispatch) {
     API.manageVotes(content).then((data) => {
       dispatch(votedComment(data))
+    })
+  }
+}
+
+export function removePost (content) {
+  return function (dispatch) {
+    API.deletePost(content).then((data) => {
+      dispatch(deletedPost(data))
+    })
+  }
+}
+
+export function removeSinglePost (content) {
+  return function (dispatch) {
+    API.deletePost(content)
+    API.getAll().then((data) => {
+      dispatch(loadPosts(data))
     })
   }
 }
