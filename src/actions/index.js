@@ -10,6 +10,7 @@ export const RELOAD_COMMENTS = 'RELOAD_COMMENTS'
 export const RELOAD_POST = 'RELOAD_POST'
 export const VOTED_POST = 'VOTED_POST'
 export const VOTED_SINGLE_POST = 'VOTED_SINGLE_POST'
+export const VOTED_COMMENT = 'VOTED_COMMENT'
 
 export function loadCategories (categories) {
   return {
@@ -78,6 +79,13 @@ export function votedSinglePost (post) {
   return {
     type: VOTED_SINGLE_POST,
     post
+  }
+}
+
+export function votedComment (comment) {
+  return {
+    type: VOTED_COMMENT,
+    comment
   }
 }
 
@@ -157,6 +165,14 @@ export function changePostVote (content) {
   return function (dispatch) {
     API.manageVotes(content).then((data) => {
       dispatch(votedSinglePost(data))
+    })
+  }
+}
+
+export function changeCommentVote (content) {
+  return function (dispatch) {
+    API.manageVotes(content).then((data) => {
+      dispatch(votedComment(data))
     })
   }
 }

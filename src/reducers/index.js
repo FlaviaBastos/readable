@@ -9,7 +9,8 @@ import {
   RELOAD_COMMENTS,
   RELOAD_POST,
   VOTED_POST,
-  VOTED_SINGLE_POST
+  VOTED_SINGLE_POST,
+  VOTED_COMMENT
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -67,6 +68,17 @@ function commentsByPost (state = {}, action) {
       return {
         ...state,
         commentsByPost: action.comments
+      }
+    case VOTED_COMMENT:
+      return {
+        ...state,
+        commentsByPost: state.commentsByPost.map(comment => {
+          if (comment.id === action.comment.id) {
+            return action.comment
+          } else {
+            return comment
+          }
+        })
       }
     case RELOAD_COMMENTS:
       return state

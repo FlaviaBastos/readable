@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import dateToDisplay from '../utils/helpers'
 import serializeForm from 'form-serialize'
-import { editComment } from '../actions'
+import { editComment, changeCommentVote } from '../actions'
 
 class Comments extends React.Component {
   constructor() {
@@ -11,6 +11,7 @@ class Comments extends React.Component {
       idToEdit: ''
     }
     this.handleEditComment = this.handleEditComment.bind(this)
+    this.handleVotes = this.handleVotes.bind(this)
   }
 
   onEditComment (id) {
@@ -29,6 +30,11 @@ class Comments extends React.Component {
     values.type = 'comments'
     this.setState({idToEdit: ''})
     this.props.dispatch(editComment(values))
+  }
+
+  handleVotes = (id, forType, voteOption) => {
+    const values = { id: id, type: forType, option: voteOption }
+    this.props.dispatch(changeCommentVote(values))
   }
 
   render() {
@@ -56,6 +62,14 @@ class Comments extends React.Component {
         {comment.id !== idToEdit && (
           <div>
             <div className="info">
+              <div className="votes">
+                <a className="btn-floating" onClick={() => this.handleVotes(comment.id, 'comments', 'upVote')}>
+                  <i className="material-icons">arrow_upward</i>
+                </a>
+                <a className="btn-floating" onClick={() => this.handleVotes(comment.id, 'comments', 'downVote')}>
+                  <i className="material-icons">arrow_downward</i>
+                </a>
+              </div>
               <h6>{comment.body}</h6>
               <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {dateToDisplay(comment.timestamp)}</p>
             </div>
