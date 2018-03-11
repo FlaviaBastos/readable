@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import NotFound from './NotFound'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchComments } from '../actions'
+import { fetchPost, fetchComments } from '../actions'
 import Comments from './Comments'
 
 class ItemDetail extends React.Component {
   componentDidMount() {
+    this.props.dispatch(fetchPost(this.props.match.params.id))
     this.props.dispatch(fetchComments(this.props.match.params.id))
   }
 
@@ -19,7 +19,7 @@ class ItemDetail extends React.Component {
       <div>
         <div key={posts.id}>
           <h4>{posts.title}</h4>
-          <small>In {posts.category}, by {posts.author}, on {posts.timestamp}, on {dateToDisplay(posts.timestamp)}, with score: {posts.voteScore}</small>
+          <small>In {posts.category}, by {posts.author}, on {dateToDisplay(posts.timestamp)}, with score: {posts.voteScore}</small>
           <div>
             <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
           </div>

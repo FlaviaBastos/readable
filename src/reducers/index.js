@@ -4,7 +4,8 @@ import {
   LOAD_POSTS,
   LOAD_POST,
   ADD_POST,
-  LOAD_COMMENTS
+  LOAD_COMMENTS,
+  ADD_COMMENT
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -46,6 +47,8 @@ function commentsByPost (state = {}, action) {
         ...state,
         commentsByPost: action.comments
       }
+    case ADD_COMMENT:
+      return state
     default:
       return state
   }

@@ -37,6 +37,7 @@ class App extends Component {
               <Route exact path='/add_content' component={NewAddContent} />
               <Route exact path='/:category' component={ItemsList} />
               <Route exact path='/:category/:id' component={ItemDetail} />
+              <Route exact path='/:category/:id/add_comment' component={NewAddContent} />
               <Route component={NotFound} />
             </Switch>
           </div>

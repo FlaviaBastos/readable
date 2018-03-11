@@ -5,6 +5,7 @@ export const LOAD_POSTS = 'LOAD_POSTS'
 export const LOAD_POST = 'LOAD_POST'
 export const ADD_POST = 'ADD_POST'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
+export const ADD_COMMENT = 'ADD_COMMENT'
 
 export function loadCategories (categories) {
   return {
@@ -38,6 +39,13 @@ export function loadComments (comments) {
   return {
     type: LOAD_COMMENTS,
     comments
+  }
+}
+
+export function addComment (comment) {
+  return {
+    type: ADD_COMMENT,
+    comment
   }
 }
 
@@ -77,6 +85,14 @@ export function fetchComments (id) {
   return function (dispatch) {
     API.getComments(id).then((data) => {
       dispatch(loadComments(data))
+    })
+  }
+}
+
+export function writeComment (content) {
+  return function (dispatch) {
+    API.addPost(content).then((data) => {
+      dispatch(addComment(data))
     })
   }
 }
