@@ -6,7 +6,8 @@ import {
   ADD_POST,
   LOAD_COMMENTS,
   ADD_COMMENT,
-  RELOAD_COMMENTS
+  RELOAD_COMMENTS,
+  RELOAD_POST
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -35,6 +36,8 @@ function posts (state = {}, action) {
         ...state,
         posts: state.posts.concat(action.post)
       }
+    case RELOAD_POST:
+      return state
     default:
       return state
   }

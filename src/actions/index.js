@@ -7,6 +7,7 @@ export const ADD_POST = 'ADD_POST'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const RELOAD_COMMENTS = 'RELOAD_COMMENTS'
+export const RELOAD_POST = 'RELOAD_POST'
 
 export function loadCategories (categories) {
   return {
@@ -54,6 +55,13 @@ export function reloadComments (comments) {
   return {
     type: RELOAD_COMMENTS,
     comments
+  }
+}
+
+export function reloadPost (post) {
+  return {
+    type: RELOAD_POST,
+    post
   }
 }
 
@@ -109,6 +117,14 @@ export function editComment (content) {
   return function (dispatch) {
     API.editContent(content).then((data) => {
       dispatch(reloadComments(data))
+    })
+  }
+}
+
+export function editPost (content) {
+  return function (dispatch) {
+    API.editContent(content).then((data) => {
+      dispatch(reloadPost(data))
     })
   }
 }

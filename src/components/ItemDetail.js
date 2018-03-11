@@ -4,45 +4,99 @@ import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
 import { fetchPost, fetchComments } from '../actions'
 import Comments from './Comments'
+import serializeForm from 'form-serialize'
+import { editPost } from '../actions'
 
 class ItemDetail extends React.Component {
-  componentDidMount() {
+  constructor() {
+    super()
+    this.state = {
+      editing: false
+    }
+    this.handleEditPost = this.handleEditPost.bind(this)
+  }
+
+  componentDidMount () {
     this.props.dispatch(fetchPost(this.props.match.params.id))
     this.props.dispatch(fetchComments(this.props.match.params.id))
+  }
+
+  onEditingPost (id) {
+    const { editing } = this.state
+    this.setState((state) => ({
+      editing: true
+    }))
+  }
+
+  handleEditPost = (e) => {
+    e.preventDefault()
+    const { editing } = this.state
+    const edited = serializeForm(e.target, { hash: true })
+    const item = this.props.posts
+    const values = Object.assign(item, edited)
+    values.type = 'posts'
+    this.setState({ editing: false })
+    this.props.dispatch(editPost(values))
   }
 
   render () {
     const posts = this.props.posts
     const comments = this.props.commentsByPost
+    const editing = this.state.editing
 
     return (
       <div>
-        <div key={posts.id}>
-          <h4>{posts.title}</h4>
-          <small>In {posts.category}, by {posts.author}, on {dateToDisplay(posts.timestamp)}, with score: {posts.voteScore}</small>
+        {editing && (
           <div>
-            <a className="btn-floating" onClick={() => this.onEditingPost(this)}><i className="material-icons">mode_edit</i></a>
+            <form onSubmit={this.handleEditPost}>
+              <div className="row">
+                <div className="input-field col s6">
+                  <input defaultValue={posts.title} name="title" type="text" className="validate" />
+                  <label className="active" htmlFor="post_title">Title</label>
+                </div>
+              </div>
+              <div className="row">
+                <div className="input-field col s12">
+                  <textarea name="body" className="materialize-textarea" defaultValue={posts.body}></textarea>
+                  <label className="active" htmlFor="textarea1">Post content</label>
+                </div>
+              </div>
+              <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i className="material-icons right">send</i>
+              </button>
+            </form>
           </div>
-          <p>{posts.body}</p>
-          <Link
-            to={`/${posts.category}/${posts.id}/add_comment`}
-            className="btn-floating"
-            onClick={() => this.sendPostID(posts.id)}>
-            <i className="material-icons">add</i>
-          </Link>
-        </div>
-
-        {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
-        {comments && comments.length > 0 && (
+        )}
+        {!editing && (
           <div>
-            <h4>{comments.length} Comments</h4>
-            <ul className="collection">
-              {comments.map(comment => (
-                <li className="collection-item avatar" key={comment.id}>
-                  <Comments comment={comment}/>
-                </li>
-              ))}
-            </ul>
+            <div key={posts.id}>
+              <h4>{posts.title}</h4>
+              <small>In {posts.category}, by {posts.author}, on {dateToDisplay(posts.timestamp)}, with score: {posts.voteScore}</small>
+              <div>
+                <a className="btn-floating" onClick={() => this.onEditingPost(posts.id)}><i className="material-icons">mode_edit</i></a>
+              </div>
+              <p>{posts.body}</p>
+              <Link
+                to={`/${posts.category}/${posts.id}/add_comment`}
+                className="btn-floating"
+                onClick={() => this.sendPostID(posts.id)}>
+                <i className="material-icons">add</i>
+              </Link>
+            </div>
+
+            {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
+            {comments && comments.length > 0 && (
+              <div>
+                <h4>{comments.length} Comments</h4>
+                <ul className="collection">
+                  {comments.map(comment => (
+                    <li className="collection-item avatar" key={comment.id}>
+                      <Comments comment={comment}/>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </div>
