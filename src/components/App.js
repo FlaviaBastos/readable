@@ -4,6 +4,7 @@ import { Route, withRouter, Switch } from 'react-router-dom'
 import * as API from '../utils/api'
 import CategoryHeader from './CategoryHeader'
 import ItemsList from './ItemsList'
+import ItemDetail from './ItemDetail'
 import NewAddContent from './NewAddContent'
 import NotFound from './NotFound'
 import { fetchPosts, loadPosts } from '../actions'
@@ -35,6 +36,7 @@ class App extends Component {
               <Route exact path='/' component={ItemsList} />
               <Route exact path='/add_content' component={NewAddContent} />
               <Route exact path='/:category' component={ItemsList} />
+              <Route exact path='/:category/:id' component={ItemDetail} />
               <Route component={NotFound} />
             </Switch>
           </div>

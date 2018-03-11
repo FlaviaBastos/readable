@@ -4,8 +4,14 @@ import { Link } from 'react-router-dom'
 // import ManageVotes from './ManageVotes'
 // import DeleteContent from './DeleteContent'
 import dateToDisplay from '../utils/helpers'
+import { fetchPost, fetchComments } from '../actions'
 
 class ItemsList extends React.Component {
+
+  showPost (postId) {
+    this.props.dispatch(fetchPost(postId))
+  }
+
   render() {
     const { posts } = this.props
 
@@ -25,7 +31,7 @@ class ItemsList extends React.Component {
                           onClick={() => this.showPost(item.id)}
                         >{item.title}
                         </Link>
-                        <p>by <strong>{item.author}</strong>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {dateToDisplay(item.timestamp)}</p>
+                        <p>by <strong>{item.author}</strong>, <i>{item.category}</i>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {dateToDisplay(item.timestamp)}</p>
                       </div>
                       <div>
                         <a className="btn-floating" onClick={() => this.onEditPost(item.id)}><i className="material-icons">mode_edit</i></a>

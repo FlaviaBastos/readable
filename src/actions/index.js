@@ -2,7 +2,9 @@ import * as API from '../utils/api'
 
 export const CATEGORIES = 'CATEGORIES'
 export const LOAD_POSTS = 'LOAD_POSTS'
+export const LOAD_POST = 'LOAD_POST'
 export const ADD_POST = 'ADD_POST'
+export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 
 export function loadCategories (categories) {
   return {
@@ -18,10 +20,24 @@ export function loadPosts (posts) {
   }
 }
 
+export function loadPost (post) {
+  return {
+    type: LOAD_POST,
+    post
+  }
+}
+
 export function addPost (post) {
   return {
     type: ADD_POST,
     post
+  }
+}
+
+export function loadComments (comments) {
+  return {
+    type: LOAD_COMMENTS,
+    comments
   }
 }
 
@@ -49,11 +65,18 @@ export function writePost (content) {
   }
 }
 
-// export function fetchComments (id) {
-//   return function (dispatch) {
-//     dispatch(requestComments())
-//     API.getComments(id).then((data) => {
-//       dispatch(receiveComments(data))
-//     })
-//   }
-// }
+export function fetchPost (id) {
+  return function (dispatch) {
+    API.getPost(id).then((data) => {
+      dispatch(loadPost(data))
+    })
+  }
+}
+
+export function fetchComments (id) {
+  return function (dispatch) {
+    API.getComments(id).then((data) => {
+      dispatch(loadComments(data))
+    })
+  }
+}
