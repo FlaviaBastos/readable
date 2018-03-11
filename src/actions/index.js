@@ -8,6 +8,7 @@ export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const RELOAD_COMMENTS = 'RELOAD_COMMENTS'
 export const RELOAD_POST = 'RELOAD_POST'
+export const VOTED_POST = 'VOTED_POST'
 
 export function loadCategories (categories) {
   return {
@@ -61,6 +62,13 @@ export function reloadComments (comments) {
 export function reloadPost (post) {
   return {
     type: RELOAD_POST,
+    post
+  }
+}
+
+export function votedPost (post) {
+  return {
+    type: VOTED_POST,
     post
   }
 }
@@ -125,6 +133,14 @@ export function editPost (content) {
   return function (dispatch) {
     API.editContent(content).then((data) => {
       dispatch(reloadPost(data))
+    })
+  }
+}
+
+export function changeVote (content) {
+  return function (dispatch) {
+    API.manageVotes(content).then((data) => {
+      dispatch(votedPost(data))
     })
   }
 }

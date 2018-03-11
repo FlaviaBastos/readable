@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
 import { fetchPost, editPost } from '../actions'
 import serializeForm from 'form-serialize'
+import ManageVotes from './ManageVotes'
 
 class ItemsList extends React.Component {
   constructor() {
@@ -70,6 +71,7 @@ class ItemsList extends React.Component {
                     )}
                     {item.id !== idToEdit && (
                       <div>
+                        <ManageVotes id={item.id} type='posts'/>
                         <div className="info">
                           <Link to={`${item.category}/${item.id}`}
                             className="title"

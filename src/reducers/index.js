@@ -7,7 +7,8 @@ import {
   LOAD_COMMENTS,
   ADD_COMMENT,
   RELOAD_COMMENTS,
-  RELOAD_POST
+  RELOAD_POST,
+  VOTED_POST
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -38,11 +39,21 @@ function posts (state = {}, action) {
       }
     case RELOAD_POST:
       return state
+    case VOTED_POST:
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post.id === action.post.id) {
+            return action.post
+          } else {
+            return post
+          }
+        })
+      }
     default:
       return state
   }
 }
-
 
 function commentsByPost (state = {}, action) {
   switch (action.type) {
