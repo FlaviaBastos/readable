@@ -2,10 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, fetchComments } from '../actions'
+import { fetchPost, fetchComments, changePostVote } from '../actions'
 import Comments from './Comments'
 import serializeForm from 'form-serialize'
 import { editPost } from '../actions'
+import ManageVotes from './ManageVotes'
 
 class ItemDetail extends React.Component {
   constructor() {
@@ -14,6 +15,7 @@ class ItemDetail extends React.Component {
       editing: false
     }
     this.handleEditPost = this.handleEditPost.bind(this)
+    this.handleVotes = this.handleVotes.bind(this)
   }
 
   componentDidMount () {
@@ -37,6 +39,11 @@ class ItemDetail extends React.Component {
     values.type = 'posts'
     this.setState({ editing: false })
     this.props.dispatch(editPost(values))
+  }
+
+  handleVotes = (id, forType, voteOption) => {
+    const values = { id: id, type: forType, option: voteOption }
+    this.props.dispatch(changePostVote(values))
   }
 
   render () {
@@ -69,6 +76,14 @@ class ItemDetail extends React.Component {
         )}
         {!editing && (
           <div>
+            <div className="votes">
+              <a className="btn-floating" onClick={() => this.handleVotes(posts.id, 'posts', 'upVote')}>
+                <i className="material-icons">arrow_upward</i>
+              </a>
+              <a className="btn-floating" onClick={() => this.handleVotes(posts.id, 'posts', 'downVote')}>
+                <i className="material-icons">arrow_downward</i>
+              </a>
+            </div>
             <div key={posts.id}>
               <h4>{posts.title}</h4>
               <small>In {posts.category}, by {posts.author}, on {dateToDisplay(posts.timestamp)}, with score: {posts.voteScore}</small>

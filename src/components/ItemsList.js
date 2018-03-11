@@ -2,9 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, editPost } from '../actions'
+import { fetchPost, editPost, changeVote } from '../actions'
 import serializeForm from 'form-serialize'
-import ManageVotes from './ManageVotes'
 
 class ItemsList extends React.Component {
   constructor() {
@@ -13,6 +12,7 @@ class ItemsList extends React.Component {
       idToEdit: ''
     }
     this.handleEditPost = this.handleEditPost.bind(this)
+    this.handleVotes = this.handleVotes.bind(this)
   }
 
   showPost (postId) {
@@ -34,6 +34,11 @@ class ItemsList extends React.Component {
     values.type = 'posts'
     this.setState({ idToEdit: '' })
     this.props.dispatch(editPost(values))
+  }
+
+  handleVotes = (id, forType, voteOption) => {
+    const values = { id: id, type: forType, option: voteOption }
+    this.props.dispatch(changeVote(values))
   }
 
   render() {
@@ -71,7 +76,14 @@ class ItemsList extends React.Component {
                     )}
                     {item.id !== idToEdit && (
                       <div>
-                        <ManageVotes id={item.id} type='posts'/>
+                        <div className="votes">
+                          <a className="btn-floating" onClick={() => this.handleVotes(item.id, 'posts', 'upVote')}>
+                            <i className="material-icons">arrow_upward</i>
+                          </a>
+                          <a className="btn-floating" onClick={() => this.handleVotes(item.id, 'posts', 'downVote')}>
+                            <i className="material-icons">arrow_downward</i>
+                          </a>
+                        </div>
                         <div className="info">
                           <Link to={`${item.category}/${item.id}`}
                             className="title"

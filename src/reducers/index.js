@@ -8,7 +8,8 @@ import {
   ADD_COMMENT,
   RELOAD_COMMENTS,
   RELOAD_POST,
-  VOTED_POST
+  VOTED_POST,
+  VOTED_SINGLE_POST
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -49,6 +50,11 @@ function posts (state = {}, action) {
             return post
           }
         })
+      }
+    case VOTED_SINGLE_POST:
+      return {
+        ...state,
+        posts: action.post
       }
     default:
       return state
