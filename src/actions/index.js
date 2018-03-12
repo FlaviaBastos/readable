@@ -2,6 +2,7 @@ import * as API from '../utils/api'
 
 export const CATEGORIES = 'CATEGORIES'
 export const LOAD_POSTS = 'LOAD_POSTS'
+export const LOAD_SORTED = 'LOAD_SORTED'
 export const LOAD_POST = 'LOAD_POST'
 export const ADD_POST = 'ADD_POST'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
@@ -25,6 +26,13 @@ export function loadCategories (categories) {
 export function loadPosts (posts) {
   return {
     type: LOAD_POSTS,
+    posts
+  }
+}
+
+export function loadSorted (posts) {
+  return {
+    type: LOAD_SORTED,
     posts
   }
 }

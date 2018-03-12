@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import {
   CATEGORIES,
   LOAD_POSTS,
+  LOAD_SORTED,
   LOAD_POST,
   ADD_POST,
   LOAD_COMMENTS,
@@ -28,6 +29,11 @@ function categories (state = {}, action) {
 function posts (state = {}, action) {
   switch (action.type) {
     case LOAD_POSTS:
+      return {
+        ...state,
+        posts: action.posts
+      }
+    case LOAD_SORTED:
       return {
         ...state,
         posts: action.posts
