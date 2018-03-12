@@ -12,7 +12,8 @@ import {
   VOTED_SINGLE_POST,
   VOTED_COMMENT,
   DELETED_POST,
-  DELETED_SINGLE_POST
+  DELETED_SINGLE_POST,
+  DELETED_COMMENT
 } from '../actions'
 
 function categories (state = {}, action) {
@@ -92,6 +93,11 @@ function commentsByPost (state = {}, action) {
             return comment
           }
         })
+      }
+    case DELETED_COMMENT:
+      return {
+        ...state,
+        commentsByPost: state.commentsByPost.filter(comment => comment.id !== action.comment.id)
       }
     case RELOAD_COMMENTS:
       return state

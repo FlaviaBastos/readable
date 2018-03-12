@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import dateToDisplay from '../utils/helpers'
 import serializeForm from 'form-serialize'
-import { editComment, changeCommentVote } from '../actions'
+import { editComment, changeCommentVote, removeComment } from '../actions'
 
 class Comments extends React.Component {
   constructor() {
@@ -12,6 +12,7 @@ class Comments extends React.Component {
     }
     this.handleEditComment = this.handleEditComment.bind(this)
     this.handleVotes = this.handleVotes.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   onEditComment (id) {
@@ -35,6 +36,11 @@ class Comments extends React.Component {
   handleVotes = (id, forType, voteOption) => {
     const values = { id: id, type: forType, option: voteOption }
     this.props.dispatch(changeCommentVote(values))
+  }
+
+  handleDelete = (id, forType) => {
+    const values = {id: id, type: forType}
+    this.props.dispatch(removeComment(values))
   }
 
   render() {
@@ -75,6 +81,11 @@ class Comments extends React.Component {
             </div>
             <div>
               <a className="btn-floating" onClick={() => this.onEditComment(comment.id)}><i className="material-icons">mode_edit</i></a>
+            </div>
+            <div>
+              <a className="btn-floating secondary-content" onClick={() => this.handleDelete(comment.id, 'comments')}>
+                <i className="material-icons">delete</i>
+              </a>
             </div>
           </div>
         )}

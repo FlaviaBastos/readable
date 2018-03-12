@@ -50,7 +50,6 @@ class ItemsList extends React.Component {
   render() {
     const { posts } = this.props
     const { idToEdit } = this.state
-    console.log('POSTS: ', posts)
 
     return (
       <div>
