@@ -5,7 +5,7 @@ import * as API from '../utils/api'
 import CategoryHeader from './CategoryHeader'
 import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
-import NewAddContent from './NewAddContent'
+import AddContent from './AddContent'
 import NotFound from './NotFound'
 import { fetchPosts, loadPosts } from '../actions'
 
@@ -34,10 +34,10 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path='/' component={ItemsList} />
-              <Route exact path='/add_content' component={NewAddContent} />
+              <Route exact path='/add_content' component={AddContent} />
               <Route exact path='/:category' component={ItemsList} />
               <Route exact path='/:category/:id' component={ItemDetail} />
-              <Route exact path='/:category/:id/add_comment' component={NewAddContent} />
+              <Route exact path='/:category/:id/add_comment' component={AddContent} />
               <Route component={NotFound} />
             </Switch>
           </div>

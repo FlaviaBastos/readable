@@ -1,27 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect, withRouter } from 'react-router-dom'
-import { writeComment, writePost } from '../actions'
+import { Redirect } from 'react-router-dom'
+import { writePost, writeComment } from '../actions'
+import { Input } from 'react-materialize'
 import serializeForm from 'form-serialize'
 import cuid from 'cuid'
-import { Input } from 'react-materialize'
-import ItemDetail from './ItemDetail'
-
-function mapStateToProps(state) {
-  const { selectedCategory, contentByCategory } = state
-  const {
-    isFetching,
-    items: posts
-  } = contentByCategory[selectedCategory] || {
-    isFetching: true,
-    items: []
-  }
-  return {
-    selectedCategory,
-    posts,
-    isFetching
-  }
-}
 
 class AddContent extends React.Component {
   constructor(props) {
@@ -54,7 +37,7 @@ class AddContent extends React.Component {
     this.props.history.goBack()
   }
 
-  render() {
+  render () {
     const { redir_home } = this.state
 
     if (redir_home) {
@@ -86,6 +69,7 @@ class AddContent extends React.Component {
             </form>
           </div>
         )}
+
         { this.props.match.path === '/:category/:id/add_comment' && (
           <div className="row">
             <form onSubmit={this.handleSubmitComm}>
@@ -105,4 +89,4 @@ class AddContent extends React.Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(AddContent))
+export default connect()(AddContent)
