@@ -29,19 +29,19 @@ class App extends Component {
         const newest = posts.sort((a, b) =>
           a.timestamp > b.timestamp ? -1 : 1)
         this.props.dispatch(loadSorted(newest))
-        console.table(newest)
+        this.setState({ posts: posts })
         break
       case 'comments':
         const mostCommented = posts.sort((a, b) =>
           a.commentCount > b.commentCount ? -1 : 1)
         this.props.dispatch(loadSorted(mostCommented))
-        console.table(mostCommented)
+        this.setState({ posts: posts })
         break
       case 'popular':
         const mostVoted = posts.sort((a, b) =>
           a.voteScore > b.voteScore ? -1 : 1)
         this.props.dispatch(loadSorted(mostVoted))
-        console.table(mostVoted)
+        this.setState({ posts: posts })
         break
       default:
         this.props.dispatch(fetchPosts())
