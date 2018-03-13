@@ -11,7 +11,6 @@ import NotFound from './NotFound'
 import { fetchPosts, loadPosts, loadSorted } from '../actions'
 
 class App extends Component {
-
   loadCategory (category) {
     if (category === 'all') {
       this.props.dispatch(fetchPosts())

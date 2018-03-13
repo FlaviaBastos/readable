@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, BrowserRouter, Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
 import { fetchPost, fetchComments, changePostVote, removeSinglePost } from '../actions'
 import Comments from './Comments'
@@ -60,12 +60,7 @@ class ItemDetail extends React.Component {
     const { redir_home } = this.state
 
     if (redir_home) {
-      return (
-        <div>
-          <BrowserRouter forceRefresh={true} />
-          <Redirect to="/" />
-        </div>
-      )
+      return (<Redirect to="/" />)
     }
 
     return (

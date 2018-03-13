@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPosts, fetchPost, editPost, changeVote, removePost } from '../actions'
+import { fetchPost, editPost, changeVote, removePost } from '../actions'
 import serializeForm from 'form-serialize'
 
 class ItemsList extends React.Component {
@@ -50,7 +50,6 @@ class ItemsList extends React.Component {
   render() {
     const { posts } = this.props
     const { idToEdit } = this.state
-
     return (
       <div>
         {posts &&

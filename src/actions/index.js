@@ -8,6 +8,7 @@ export const ADD_POST = 'ADD_POST'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const RELOAD_COMMENTS = 'RELOAD_COMMENTS'
+export const RELOAD_POSTS = 'RELOAD_POSTS'
 export const RELOAD_POST = 'RELOAD_POST'
 export const VOTED_POST = 'VOTED_POST'
 export const VOTED_SINGLE_POST = 'VOTED_SINGLE_POST'
@@ -76,6 +77,13 @@ export function reloadPost (post) {
   return {
     type: RELOAD_POST,
     post
+  }
+}
+
+export function reloadPosts (posts) {
+  return {
+    type: RELOAD_POSTS,
+    posts
   }
 }
 
@@ -221,7 +229,7 @@ export function removeSinglePost (content) {
   return function (dispatch) {
     API.deletePost(content)
     API.getAll().then((data) => {
-      dispatch(loadPosts(data))
+      dispatch(reloadPosts(data))
     })
   }
 }

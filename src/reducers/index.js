@@ -9,6 +9,7 @@ import {
   ADD_COMMENT,
   RELOAD_COMMENTS,
   RELOAD_POST,
+  RELOAD_POSTS,
   VOTED_POST,
   VOTED_SINGLE_POST,
   VOTED_COMMENT,
@@ -50,6 +51,11 @@ function posts (state = {}, action) {
       }
     case RELOAD_POST:
       return state
+    case RELOAD_POSTS:
+      return {
+        ...state,
+        posts: action.posts
+      }
     case VOTED_POST:
       return {
         ...state,
