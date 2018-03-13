@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import { Route, withRouter, Switch } from 'react-router-dom'
 import * as API from '../utils/api'
 import CategoryHeader from './CategoryHeader'
-import SortBar from './SortBar'
 import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
 import AddContent from './AddContent'
 import NotFound from './NotFound'
-import { fetchPosts, fetchCategories,loadPosts, loadSorted } from '../actions'
+import { fetchPosts, fetchCategories, loadPosts, loadSorted } from '../actions'
 
 class App extends Component {
   componentWillMount () {
@@ -26,32 +25,6 @@ class App extends Component {
     }
   }
 
-  changeFilter (filterName) {
-    const { posts } = this.props
-    switch (filterName) {
-      case 'recent':
-        const newest = posts.sort((a, b) =>
-          a.timestamp > b.timestamp ? -1 : 1)
-        this.props.dispatch(loadSorted(newest))
-        this.setState({ posts: posts })
-        break
-      case 'comments':
-        const mostCommented = posts.sort((a, b) =>
-          a.commentCount > b.commentCount ? -1 : 1)
-        this.props.dispatch(loadSorted(mostCommented))
-        this.setState({ posts: posts })
-        break
-      case 'popular':
-        const mostVoted = posts.sort((a, b) =>
-          a.voteScore > b.voteScore ? -1 : 1)
-        this.props.dispatch(loadSorted(mostVoted))
-        this.setState({ posts: posts })
-        break
-      default:
-        this.props.dispatch(fetchPosts())
-    }
-  }
-
   render() {
     const { categories, posts } = this.props
 
@@ -60,9 +33,6 @@ class App extends Component {
         <CategoryHeader
           onChangeCategory={(category) => this.loadCategory(category)}
           categories={categories}
-        />
-        <SortBar
-          onChangeView={(byFilter) => this.changeFilter(byFilter)}
         />
         {posts &&
           <div>

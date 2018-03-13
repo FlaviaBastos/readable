@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, editPost, changeVote, removePost } from '../actions'
+import SortBar from './SortBar'
+import { fetchPosts, loadSorted, fetchPost, editPost, changeVote, removePost } from '../actions'
 import serializeForm from 'form-serialize'
 
 class ItemsList extends React.Component {
@@ -14,6 +15,32 @@ class ItemsList extends React.Component {
     this.handleEditPost = this.handleEditPost.bind(this)
     this.handleVotes = this.handleVotes.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+  }
+
+  changeFilter (filterName) {
+    const { posts } = this.props
+    switch (filterName) {
+      case 'recent':
+        const newest = posts.sort((a, b) =>
+          a.timestamp > b.timestamp ? -1 : 1)
+        this.props.dispatch(loadSorted(newest))
+        this.setState({ posts: posts })
+        break
+      case 'comments':
+        const mostCommented = posts.sort((a, b) =>
+          a.commentCount > b.commentCount ? -1 : 1)
+        this.props.dispatch(loadSorted(mostCommented))
+        this.setState({ posts: posts })
+        break
+      case 'popular':
+        const mostVoted = posts.sort((a, b) =>
+          a.voteScore > b.voteScore ? -1 : 1)
+        this.props.dispatch(loadSorted(mostVoted))
+        this.setState({ posts: posts })
+        break
+      default:
+        this.props.dispatch(fetchPosts())
+    }
   }
 
   showPost (postId) {
@@ -52,6 +79,9 @@ class ItemsList extends React.Component {
     const { idToEdit } = this.state
     return (
       <div>
+        <SortBar
+          onChangeView={(byFilter) => this.changeFilter(byFilter)}
+        />
         {posts &&
           <div>
             <div>
