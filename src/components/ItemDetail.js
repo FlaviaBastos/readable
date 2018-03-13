@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, Route } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
 import { fetchPost, fetchComments, changePostVote, removeSinglePost } from '../actions'
 import Comments from './Comments'
+import NotFound from './NotFound'
 import serializeForm from 'form-serialize'
 import { editPost } from '../actions'
 
@@ -58,6 +59,10 @@ class ItemDetail extends React.Component {
     const comments = this.props.commentsByPost
     const editing = this.state.editing
     const { redir_home } = this.state
+
+    if (Object.keys(posts).length === 0) {
+      return (<Route component={NotFound} />)
+    }
 
     if (redir_home) {
       return (<Redirect to="/" />)
