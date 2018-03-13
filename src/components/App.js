@@ -8,9 +8,14 @@ import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
 import AddContent from './AddContent'
 import NotFound from './NotFound'
-import { fetchPosts, loadPosts, loadSorted } from '../actions'
+import { fetchPosts, fetchCategories,loadPosts, loadSorted } from '../actions'
 
 class App extends Component {
+  componentWillMount () {
+    this.props.dispatch(fetchCategories())
+    this.props.dispatch(fetchPosts())
+  }
+
   loadCategory (category) {
     if (category === 'all') {
       this.props.dispatch(fetchPosts())

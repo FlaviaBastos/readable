@@ -6,7 +6,6 @@ import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { fetchCategories, fetchPosts } from './actions'
 import rootReducer from './reducers'
 import { Provider } from 'react-redux'
 
@@ -17,9 +16,6 @@ const store = createStore(
   compose(middleware,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 )
-
-store.dispatch(fetchCategories())
-store.dispatch(fetchPosts())
 
 ReactDOM.render(
   <Provider store={store}>
