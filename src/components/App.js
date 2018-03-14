@@ -7,7 +7,7 @@ import ItemsList from './ItemsList'
 import ItemDetail from './ItemDetail'
 import AddContent from './AddContent'
 import NotFound from './NotFound'
-import { fetchPosts, fetchCategories, loadPosts, loadSorted } from '../actions'
+import { fetchPosts, fetchCategories, loadPosts } from '../actions'
 
 class App extends Component {
   componentWillMount () {

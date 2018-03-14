@@ -29,7 +29,7 @@ class Comments extends React.Component {
     const values = Object.assign(comment, edited)
     values.timestamp = Date.now()
     values.type = 'comments'
-    this.setState({idToEdit: ''})
+    this.setState({ idToEdit: '' })
     this.props.dispatch(editComment(values))
   }
 

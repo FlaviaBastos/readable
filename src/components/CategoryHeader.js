@@ -1,5 +1,4 @@
 import React from 'react'
-import * as API from '../utils/api'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
@@ -19,7 +18,7 @@ class CategoryHeader extends React.Component {
       <div className='cat'>
         <nav>
           <div className="nav-wrapper">
-            <a href="#" className="brand-logo right">Readable</a>
+            <a href="/" className="brand-logo right">Readable</a>
             <ul className="left">
               <li>
                 <NavLink
