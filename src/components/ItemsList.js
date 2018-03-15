@@ -73,13 +73,14 @@ class ItemsList extends React.Component {
   render() {
     const { posts } = this.props
     const { idToEdit } = this.state
+
     return (
       <div>
-        <SortBar
-          onChangeView={(byFilter) => this.changeFilter(byFilter)}
-        />
-        {posts &&
+        {posts && posts.length !== 0 && (
           <div>
+            <SortBar
+              onChangeView={(byFilter) => this.changeFilter(byFilter)}
+            />
             <div>
               <ul className="collection">
                 {posts.map(item => (
@@ -144,7 +145,7 @@ class ItemsList extends React.Component {
               </div>
             </div>
           </div>
-        }
+        )}
       </div>
     )
   }

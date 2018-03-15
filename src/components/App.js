@@ -34,6 +34,7 @@ class App extends Component {
           onChangeCategory={(category) => this.loadCategory(category)}
           categories={categories}
         />
+        {posts && posts.length === 0 && <h5>There are no posts for your selection :(</h5>}
         {posts &&
           <div>
             <Switch>
