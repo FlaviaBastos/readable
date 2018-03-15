@@ -89,7 +89,7 @@ class ItemsList extends React.Component {
                       <div className="edit-form">
                         <form onSubmit={this.handleEditPost}>
                           <div className="row">
-                            <div className="input-field col s6">
+                            <div className="input-field col s12">
                               <input defaultValue={item.title} name="title" type="text" className="validate" />
                               <label className="active" htmlFor="post_title">Title</label>
                             </div>
@@ -108,22 +108,20 @@ class ItemsList extends React.Component {
                     )}
                     {item.id !== idToEdit && (
                       <div>
-                        <div className="votes">
+                        <div className="info">
+                          <Link to={`${item.category}/${item.id}`}
+                            className="title"
+                          >{item.title}
+                          </Link>
+                          <p>In <i>{item.category}</i>, by <strong>{item.author}</strong>, on <strong>{dateToDisplay(item.timestamp)}</strong>, with <strong>{item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'}</strong> and score <strong>{item.voteScore}</strong></p>
+                        </div>
+                        <div>
                           <a className="btn-floating" onClick={() => this.handleVotes(item.id, 'posts', 'upVote')}>
                             <i className="material-icons">arrow_upward</i>
                           </a>
                           <a className="btn-floating" onClick={() => this.handleVotes(item.id, 'posts', 'downVote')}>
                             <i className="material-icons">arrow_downward</i>
                           </a>
-                        </div>
-                        <div className="info">
-                          <Link to={`${item.category}/${item.id}`}
-                            className="title"
-                          >{item.title}
-                          </Link>
-                          <p>by <strong>{item.author}</strong>, <i>{item.category}</i>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {dateToDisplay(item.timestamp)}</p>
-                        </div>
-                        <div>
                           <a className="btn-floating" onClick={() => this.onEditPost(item.id)}><i className="material-icons">mode_edit</i></a>
                         </div>
                         <div>

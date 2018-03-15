@@ -18,7 +18,7 @@ form {
 }
 
 .edit-form {
-    display: flex;
+    width: 80%;
 }
 
 .row {
@@ -43,11 +43,17 @@ form {
 
 .btn, .btn-large, .btn-floating {
     margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
     background-color: #0097a7;
 }
 
 .btn:hover, .btn-floating:hover {
     background-color: #006978;
+}
+
+.comments {
+    display: flex;
 }
 
 a {

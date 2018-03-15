@@ -68,18 +68,16 @@ class Comments extends React.Component {
         {comment.id !== idToEdit && (
           <div>
             <div className="info">
-              <div className="votes">
-                <a className="btn-floating" onClick={() => this.handleVotes(comment.id, 'comments', 'upVote')}>
-                  <i className="material-icons">arrow_upward</i>
-                </a>
-                <a className="btn-floating" onClick={() => this.handleVotes(comment.id, 'comments', 'downVote')}>
-                  <i className="material-icons">arrow_downward</i>
-                </a>
-              </div>
               <h6>{comment.body}</h6>
               <p>by <strong>{comment.author}</strong>, with score {comment.voteScore}, on {dateToDisplay(comment.timestamp)}</p>
             </div>
             <div>
+              <a className="btn-floating" onClick={() => this.handleVotes(comment.id, 'comments', 'upVote')}>
+                <i className="material-icons">arrow_upward</i>
+              </a>
+              <a className="btn-floating" onClick={() => this.handleVotes(comment.id, 'comments', 'downVote')}>
+                <i className="material-icons">arrow_downward</i>
+              </a>
               <a className="btn-floating" onClick={() => this.onEditComment(comment.id)}><i className="material-icons">mode_edit</i></a>
             </div>
             <div>

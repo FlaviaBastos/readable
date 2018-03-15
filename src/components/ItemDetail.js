@@ -92,18 +92,19 @@ class ItemDetail extends React.Component {
         )}
         {!editing && (
           <div>
-            <div className="votes">
-              <a className="btn-floating" onClick={() => this.handleVotes(post.id, 'posts', 'upVote')}>
-                <i className="material-icons">arrow_upward</i>
-              </a>
-              <a className="btn-floating" onClick={() => this.handleVotes(post.id, 'posts', 'downVote')}>
-                <i className="material-icons">arrow_downward</i>
-              </a>
-            </div>
             <div key={post.id}>
               <h4>{post.title}</h4>
-              <small>In {post.category}, by {post.author}, on {dateToDisplay(post.timestamp)}, with score: {post.voteScore}</small>
+              <small>In <i>{post.category}</i>, by <strong>{post.author}</strong>, on <strong>{dateToDisplay(post.timestamp)}</strong>, with score: <strong>{post.voteScore}</strong></small>
               <div>
+                <p>{post.body}</p>
+              </div>
+              <div>
+                <a className="btn-floating" onClick={() => this.handleVotes(post.id, 'posts', 'upVote')}>
+                  <i className="material-icons">arrow_upward</i>
+                </a>
+                <a className="btn-floating" onClick={() => this.handleVotes(post.id, 'posts', 'downVote')}>
+                  <i className="material-icons">arrow_downward</i>
+                </a>
                 <a className="btn-floating" onClick={() => this.onEditingPost(post.id)}><i className="material-icons">mode_edit</i></a>
               </div>
               <div>
@@ -111,19 +112,19 @@ class ItemDetail extends React.Component {
                   <i className="material-icons">delete</i>
                 </a>
               </div>
-              <p>{post.body}</p>
-              <Link
-                to={`/${post.category}/${post.id}/add_comment`}
-                className="btn-floating"
-                onClick={() => this.sendPostID(post.id)}>
-                <i className="material-icons">add</i>
-              </Link>
             </div>
 
             {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
             {comments && comments.length > 0 && (
               <div>
-                <h4>{comments.length} Comments</h4>
+                <div className="comments">
+                  <h4>{comments.length} Comments</h4>
+                  <Link
+                    to={`/${post.category}/${post.id}/add_comment`}
+                    className="btn-floating">
+                    <i className="material-icons">add</i>
+                  </Link>
+                </div>
                 <ul className="collection">
                   {comments.map(comment => (
                     <li className="collection-item avatar" key={comment.id}>
