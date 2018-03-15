@@ -12,6 +12,15 @@ nav ul li a.active {
     background-color: rgba(0,0,0,0.1);
 }
 
+form {
+    display: block;
+    margin-top: 5em;
+}
+
+.edit-form {
+    display: flex;
+}
+
 .row {
     background-color: #e0e0e0;
 }

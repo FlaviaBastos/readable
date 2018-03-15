@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, Redirect, Route } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, fetchComments, editPost, changePostVote, removeSinglePost } from '../actions'
+import { fetchComments, editPost, changePostVote, removeSinglePost } from '../actions'
 import Comments from './Comments'
 import NotFound from './NotFound'
 import serializeForm from 'form-serialize'
@@ -20,7 +20,6 @@ class ItemDetail extends React.Component {
   }
 
   componentDidMount () {
-    this.props.dispatch(fetchPost(this.props.match.params.id))
     this.props.dispatch(fetchComments(this.props.match.params.id))
   }
 
@@ -35,7 +34,7 @@ class ItemDetail extends React.Component {
     e.preventDefault()
     const { editing } = this.state
     const edited = serializeForm(e.target, { hash: true })
-    const item = this.props.post
+    const item = this.props.posts.find(post => post.id === this.props.match.params.id)
     const values = Object.assign(item, edited)
     values.type = 'posts'
     this.setState({ editing: false })

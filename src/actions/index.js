@@ -3,7 +3,6 @@ import * as API from '../utils/api'
 export const CATEGORIES = 'CATEGORIES'
 export const LOAD_POSTS = 'LOAD_POSTS'
 export const LOAD_SORTED = 'LOAD_SORTED'
-export const LOAD_POST = 'LOAD_POST'
 export const ADD_POST = 'ADD_POST'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
@@ -35,13 +34,6 @@ export function loadSorted (posts) {
   return {
     type: LOAD_SORTED,
     posts
-  }
-}
-
-export function loadPost (post) {
-  return {
-    type: LOAD_POST,
-    post
   }
 }
 
@@ -149,14 +141,6 @@ export function writePost (content) {
   return function (dispatch) {
     API.addPost(content).then((data) => {
       dispatch(addPost(data))
-    })
-  }
-}
-
-export function fetchPost (id) {
-  return function (dispatch) {
-    API.getPost(id).then((data) => {
-      dispatch(loadPost(data))
     })
   }
 }

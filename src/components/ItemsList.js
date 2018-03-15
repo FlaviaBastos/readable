@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
 import SortBar from './SortBar'
-import { fetchPosts, loadSorted, fetchPost, editPost, changeVote, removePost } from '../actions'
+import { fetchPosts, loadSorted, editPost, changeVote, removePost } from '../actions'
 import serializeForm from 'form-serialize'
 
 class ItemsList extends React.Component {
@@ -41,10 +41,6 @@ class ItemsList extends React.Component {
       default:
         this.props.dispatch(fetchPosts())
     }
-  }
-
-  showPost (postId) {
-    this.props.dispatch(fetchPost(postId))
   }
 
   onEditPost (id) {
@@ -122,7 +118,6 @@ class ItemsList extends React.Component {
                         <div className="info">
                           <Link to={`${item.category}/${item.id}`}
                             className="title"
-                            onClick={() => this.showPost(item.id)}
                           >{item.title}
                           </Link>
                           <p>by <strong>{item.author}</strong>, <i>{item.category}</i>, with {item.commentCount} {item.commentCount > 1 ? 'comments' : 'comment'} and score {item.voteScore}, on {dateToDisplay(item.timestamp)}</p>

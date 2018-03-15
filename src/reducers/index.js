@@ -3,7 +3,6 @@ import {
   CATEGORIES,
   LOAD_POSTS,
   LOAD_SORTED,
-  LOAD_POST,
   ADD_POST,
   LOAD_COMMENTS,
   ADD_COMMENT,
@@ -39,11 +38,6 @@ function posts (state = {}, action) {
         ...state,
         posts: action.posts
       }
-    case LOAD_POST:
-      return {
-        ...state,
-        post: action.post
-      }
     case ADD_POST:
       return {
         ...state,
@@ -70,7 +64,13 @@ function posts (state = {}, action) {
     case VOTED_SINGLE_POST:
       return {
         ...state,
-        posts: action.post
+        posts: state.posts.map(post => {
+          if (post.id === action.post.id) {
+            return action.post
+          } else {
+            return post
+          }
+        })
       }
     case DELETED_POST:
       return {
@@ -78,7 +78,6 @@ function posts (state = {}, action) {
         posts: state.posts.filter(post => post.id !== action.post.id)
       }
     case DELETED_SINGLE_POST:
-      console.log('ACT: ', action)
       return {
         ...state,
         posts: {}
