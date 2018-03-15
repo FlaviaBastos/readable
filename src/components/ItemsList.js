@@ -89,7 +89,7 @@ class ItemsList extends React.Component {
                 {posts.map(item => (
                   <li className="collection-item avatar" key={item.id}>
                     {item.id === idToEdit && (
-                      <div>
+                      <div className="edit-form">
                         <form onSubmit={this.handleEditPost}>
                           <div className="row">
                             <div className="input-field col s6">

@@ -49,11 +49,11 @@ class AddContent extends React.Component {
         { this.props.match.url === '/add_content' && (
           <div className="row">
             <form onSubmit={this.handleSubmitPost}>
-              <div className="input-field col s6">
+              <div className="input-field col s4">
                 <input name="title" type="text" className="validate" />
                 <label className="active" htmlFor="post_title">Title</label>
               </div>
-              <div className="input-field col s6">
+              <div className="input-field col s4">
                 <input name="author" type="text" className="validate" />
                 <label className="active" htmlFor="post_author">Author</label>
               </div>

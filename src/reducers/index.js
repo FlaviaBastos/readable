@@ -42,7 +42,7 @@ function posts (state = {}, action) {
     case LOAD_POST:
       return {
         ...state,
-        posts: action.post
+        post: action.post
       }
     case ADD_POST:
       return {

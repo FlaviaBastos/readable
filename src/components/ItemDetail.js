@@ -2,11 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, Redirect, Route } from 'react-router-dom'
 import dateToDisplay from '../utils/helpers'
-import { fetchPost, fetchComments, changePostVote, removeSinglePost } from '../actions'
+import { fetchPost, fetchComments, editPost, changePostVote, removeSinglePost } from '../actions'
 import Comments from './Comments'
 import NotFound from './NotFound'
 import serializeForm from 'form-serialize'
-import { editPost } from '../actions'
 
 class ItemDetail extends React.Component {
   constructor() {
@@ -36,7 +35,7 @@ class ItemDetail extends React.Component {
     e.preventDefault()
     const { editing } = this.state
     const edited = serializeForm(e.target, { hash: true })
-    const item = this.props.posts
+    const item = this.props.post
     const values = Object.assign(item, edited)
     values.type = 'posts'
     this.setState({ editing: false })
@@ -59,8 +58,9 @@ class ItemDetail extends React.Component {
     const comments = this.props.commentsByPost
     const editing = this.state.editing
     const { redir_home } = this.state
+    const post = posts.find(post => post.id === this.props.match.params.id)
 
-    if (Object.keys(posts).length === 0) {
+    if (!post) {
       return (<Route component={NotFound} />)
     }
 
@@ -75,13 +75,13 @@ class ItemDetail extends React.Component {
             <form onSubmit={this.handleEditPost}>
               <div className="row">
                 <div className="input-field col s6">
-                  <input defaultValue={posts.title} name="title" type="text" className="validate" />
+                  <input defaultValue={post.title} name="title" type="text" className="validate" />
                   <label className="active" htmlFor="post_title">Title</label>
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12">
-                  <textarea name="body" className="materialize-textarea" defaultValue={posts.body}></textarea>
+                  <textarea name="body" className="materialize-textarea" defaultValue={post.body}></textarea>
                   <label className="active" htmlFor="textarea1">Post content</label>
                 </div>
               </div>
@@ -94,31 +94,31 @@ class ItemDetail extends React.Component {
         {!editing && (
           <div>
             <div className="votes">
-              <a className="btn-floating" onClick={() => this.handleVotes(posts.id, 'posts', 'upVote')}>
+              <a className="btn-floating" onClick={() => this.handleVotes(post.id, 'posts', 'upVote')}>
                 <i className="material-icons">arrow_upward</i>
               </a>
-              <a className="btn-floating" onClick={() => this.handleVotes(posts.id, 'posts', 'downVote')}>
+              <a className="btn-floating" onClick={() => this.handleVotes(post.id, 'posts', 'downVote')}>
                 <i className="material-icons">arrow_downward</i>
               </a>
             </div>
-            <div key={posts.id}>
-              <h4>{posts.title}</h4>
-              <small>In {posts.category}, by {posts.author}, on {dateToDisplay(posts.timestamp)}, with score: {posts.voteScore}</small>
+            <div key={post.id}>
+              <h4>{post.title}</h4>
+              <small>In {post.category}, by {post.author}, on {dateToDisplay(post.timestamp)}, with score: {post.voteScore}</small>
               <div>
-                <a className="btn-floating" onClick={() => this.onEditingPost(posts.id)}><i className="material-icons">mode_edit</i></a>
+                <a className="btn-floating" onClick={() => this.onEditingPost(post.id)}><i className="material-icons">mode_edit</i></a>
               </div>
-              <p>{posts.body}</p>
-              <Link
-                to={`/${posts.category}/${posts.id}/add_comment`}
-                className="btn-floating"
-                onClick={() => this.sendPostID(posts.id)}>
-                <i className="material-icons">add</i>
-              </Link>
               <div>
-                <a className="btn-floating secondary-content" onClick={() => this.handleDelete(posts.id, 'posts')}>
+                <a className="btn-floating secondary-content" onClick={() => this.handleDelete(post.id, 'posts')}>
                   <i className="material-icons">delete</i>
                 </a>
               </div>
+              <p>{post.body}</p>
+              <Link
+                to={`/${post.category}/${post.id}/add_comment`}
+                className="btn-floating"
+                onClick={() => this.sendPostID(post.id)}>
+                <i className="material-icons">add</i>
+              </Link>
             </div>
 
             {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
