@@ -114,7 +114,16 @@ class ItemDetail extends React.Component {
               </div>
             </div>
 
-            {comments && comments.length === 0 && <p>This post has no comments yet...</p>}
+            {comments && comments.length === 0 && (
+              <div>
+                <p>This post has no comments yet...</p>
+                <Link
+                  to={`/${post.category}/${post.id}/add_comment`}
+                  className="btn-floating">
+                  <i className="material-icons">add</i>
+                </Link>
+              </div>
+            )}
             {comments && comments.length > 0 && (
               <div>
                 <div className="comments">
