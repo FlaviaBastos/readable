@@ -1,6 +1,6 @@
 # Readable Project
 
-This is a a content and comment web application that allows users to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+This is a content and comment web application that allows users to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 This project was developed as the final assessment for Udacity's React & Redux course which is part of [Udacity's React Nanodegree Program](https://www.udacity.com/course/react-nanodegree--nd019). The project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Installation Steps
@@ -23,21 +23,26 @@ To run this app on your local machine follow these steps:
 └── src
     ├── actions
         ├── index.js
+        ├── types.js
     ├── components
         ├── AddContent.js
         ├── App.js
         ├── CategoryHeader.js
-        ├── DeleteContent.js
+        ├── Comments.js
         ├── ItemDetail.js
         ├── ItemsList.js
-        ├── ItemSummary.js
-        ├── ManageVotes.js
+        ├── NotFound.js
         ├── SortBar.js
     ├── reducers
+        ├── CategoriesReducer.js
+        ├── CommentsReducer.js
         ├── index.js
+        ├── PostsReducer.js
     ├── utils
         ├── api.js
-    ├── App.css    
+        ├── helpers.js
+    ├── App.css
+    ├── App.js    
     ├── App.test.js
     ├── index.css
     ├── index.js
