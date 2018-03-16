@@ -36,7 +36,7 @@ export const getSingleComment = (commentId) =>
     .then(res => res.json())
     .then(data => data)
 
-export const addPost = (params) =>
+export const addContent = (params) =>
   fetch(`${url}/${params.type}`, {
     method: 'POST',
     headers: {

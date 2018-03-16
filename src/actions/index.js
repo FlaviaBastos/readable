@@ -139,7 +139,7 @@ export function fetchPosts () {
 
 export function writePost (content) {
   return function (dispatch) {
-    API.addPost(content).then((data) => {
+    API.addContent(content).then((data) => {
       dispatch(addPost(data))
     })
   }
@@ -155,7 +155,7 @@ export function fetchComments (id) {
 
 export function writeComment (content) {
   return function (dispatch) {
-    API.addPost(content).then((data) => {
+    API.addContent(content).then((data) => {
       dispatch(addComment(data))
     })
   }
