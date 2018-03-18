@@ -70,6 +70,10 @@ class ItemsList extends React.Component {
     this.props.dispatch(removePost(values))
   }
 
+  handleCancel = () => {
+    this.setState({ idToEdit: '' })
+  }
+
   render() {
     const { posts } = this.props
     const { idToEdit } = this.state
@@ -100,6 +104,10 @@ class ItemsList extends React.Component {
                               <label className="active" htmlFor="textarea1">Post</label>
                             </div>
                           </div>
+                          <a className="waves-effect waves-teal btn-flat"
+                            onClick={() => this.handleCancel()}>
+                            Cancel
+                          </a>
                           <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                             <i className="material-icons right">send</i>
                           </button>

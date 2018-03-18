@@ -17,6 +17,7 @@ class ItemDetail extends React.Component {
     this.handleEditPost = this.handleEditPost.bind(this)
     this.handleVotes = this.handleVotes.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
   }
 
   componentDidMount () {
@@ -52,6 +53,10 @@ class ItemDetail extends React.Component {
     this.setState({ redir_home: true })
   }
 
+  handleCancel = () => {
+    this.setState({ editing: false })
+  }
+
   render () {
     const posts = this.props.posts
     const comments = this.props.commentsByPost
@@ -84,6 +89,10 @@ class ItemDetail extends React.Component {
                   <label className="active" htmlFor="textarea1">Post content</label>
                 </div>
               </div>
+              <a className="waves-effect waves-teal btn-flat"
+                onClick={() => this.handleCancel()}>
+                Cancel
+              </a>
               <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i className="material-icons right">send</i>
               </button>

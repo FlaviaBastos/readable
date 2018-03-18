@@ -13,6 +13,7 @@ class Comments extends React.Component {
     this.handleEditComment = this.handleEditComment.bind(this)
     this.handleVotes = this.handleVotes.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
   }
 
   onEditComment (id) {
@@ -43,6 +44,10 @@ class Comments extends React.Component {
     this.props.dispatch(removeComment(values))
   }
 
+  handleCancel = () => {
+    this.setState({ idToEdit: '' })
+  }
+
   render() {
     const { comment } = this.props
     const idToEdit = this.state.idToEdit
@@ -58,6 +63,10 @@ class Comments extends React.Component {
                   <label className="active" htmlFor="textarea1">Comment</label>
                 </div>
               </div>
+              <a className="waves-effect waves-teal btn-flat"
+                onClick={() => this.handleCancel()}>
+                Cancel
+              </a>
               <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i className="material-icons right">send</i>
               </button>
