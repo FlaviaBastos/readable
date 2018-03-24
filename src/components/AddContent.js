@@ -14,6 +14,7 @@ class AddContent extends React.Component {
     }
     this.handleSubmitPost = this.handleSubmitPost.bind(this)
     this.handleSubmitComm = this.handleSubmitComm.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
   }
 
   handleSubmitPost = (e) => {
@@ -34,6 +35,10 @@ class AddContent extends React.Component {
     values.type = 'comments'
     values.parentId = this.props.match.params.id
     this.props.dispatch(writeComment(values))
+    this.props.history.goBack()
+  }
+
+  handleCancel = () => {
     this.props.history.goBack()
   }
 
@@ -63,6 +68,10 @@ class AddContent extends React.Component {
                 <option value="udacity">udacity</option>
               </Input>
               <textarea type="textearea" name="body" placeholder="Post content" />
+              <a className="waves-effect waves-teal btn-flat"
+                onClick={() => this.handleCancel()}>
+                Cancel
+              </a>
               <button className="btn waves-effect waves-light" type="submit" name="action">Add post
                 <i className="material-icons right">send</i>
               </button>
@@ -78,6 +87,10 @@ class AddContent extends React.Component {
                 <label className="active" htmlFor="comment_author">Author</label>
               </div>
               <textarea type="textearea" name="body" placeholder="Post content" />
+              <a className="waves-effect waves-teal btn-flat"
+                onClick={() => this.handleCancel()}>
+                Cancel
+              </a>
               <button className="btn waves-effect waves-light" type="submit" name="action">Add comment
                 <i className="material-icons right">send</i>
               </button>
